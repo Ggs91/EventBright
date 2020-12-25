@@ -1,6 +1,6 @@
 class Event < ApplicationRecord
   # Associations
-  belongs_to :administrator
+  belongs_to :administrator, class_name: "User"
   has_many :participations, dependent: :destroy
   has_many :participants, through: :participations, source: :user, dependent: :destroy
   # Validations
