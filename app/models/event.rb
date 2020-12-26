@@ -23,4 +23,8 @@ class Event < ApplicationRecord
   def duration_must_be_positif_multiple_of_5
     errors.add(:duration, "must be a multiple of 5") unless duration.present? && duration > 0 && duration % 5 == 0
   end
+
+  def starting_date
+    self.start_date.strftime("%d-%m-%Y") + " at " + self.start_date.strftime("%H:%M")
+  end
 end
