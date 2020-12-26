@@ -6,7 +6,7 @@
   <body>
     <h1>Thanks for taking part of the event "<%= @event.title %>" !</h1>
     <p>
-      This event takes place the <%= @event.starting_date %>, it is administrated by <%= @event.administrator %>
+      This event takes place the <%= @event.starting_date %>, it is administrated by <%= @event.administrator.first_name %>
     </p>
     <p>
       <%= @event.participants.count %> participant(s) already part of this event !
