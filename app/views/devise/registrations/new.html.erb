@@ -15,6 +15,11 @@
       <%= f.password_field :password, autocomplete: "new-password", placeholder: "Password", class:'form-control' %> 
     </div>
 
+    <div class="field form-group">
+      <%= f.label :password_confirmation %>
+      <%= f.password_field :password_confirmation, autocomplete: "new-password", placeholder: "Password confirmation", class:'form-control' %> 
+    </div>
+
     <div class="actions">
       <%= f.submit "Sign up", class: 'btn btn-primary' %>
     </div>
