@@ -19,7 +19,7 @@ class EventsController < ApplicationController
 
     if @event.save 
       flash[:success] = "Your event has been created !"
-      redirect_to root_path
+      redirect_to :show
     else
       flash[:warning] = "Your event has not been created"
       render :new
