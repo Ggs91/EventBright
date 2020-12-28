@@ -1,10 +1,10 @@
 module ApplicationHelper
   def bootstrap_class_for_flash(type)
     case type
-      when 'notice' then 'alert-info'
+      when 'info' then 'alert-info'
       when 'success' then 'alert-success'
-      when 'error' then 'alert-danger'
-      when 'alert' then 'alert-warning'
+      when 'danger' then 'alert-danger'
+      when 'warning' then 'alert-warning'
     end
   end
 end
