@@ -15,7 +15,7 @@ class EventsController < ApplicationController
   end
 
   def create
-      @event = Event.new(event_params.merge(administrator: current_user))
+      @event = Event.new(event_params.merge(administrator: current_user, start_date: parsed_date))
 
     if @event.save 
       flash[:success] = "Your event has been created !"
@@ -35,6 +35,11 @@ private
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def event_params
-    params.require(:event).permit(:title, :description,:start_date, :location, :price, :duration)
+    params.require(:event).permit(:title, :description, :location, :price, :duration)
   end  
+
+	def parsed_date
+		date = params.require(:event).permit(:start_date) 
+	  DateTime.parse("#{date}")
+	end    
 end
