@@ -1,0 +1,30 @@
+<div class="container">
+  <div role="main">
+    <div class="starter-template">
+      <h1>Your Profile</h1>
+      <p class="lead">Here you can find your personal infos & the events you're administrating</p>
+    </div>
+  </div>
+  <section>
+    <h2>Your personnal infos:</h2>
+    <ul class="user-infos">
+      <li>First name: <%= current_user.first_name %></li>
+      <li>Last name: <%= current_user.last_name %></li>
+      <li>Description: <%= current_user.description %></li>
+      <li>Email: <%= current_user.email %></li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Administraed events:</h2>
+    <ul class="list-group">
+      <% current_user.administrated_events.each do |event| %>
+        <li>
+          <%= link_to event_path(event), class: "list-group-item list-group-item-action" do %> 
+            Title:  <%= event.title %> Starting: <%= event.starting_date %>
+          <% end %>
+        </li>
+      <% end %>
+    </ul>
+  </section>
+</div>

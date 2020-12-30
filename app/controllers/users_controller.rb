@@ -7,7 +7,7 @@ class UsersController < ApplicationController
 private
   def restrict_acess_to_owner
     unless User.find(params[:id]) == current_user 
-     flash[:warning] = "Sorry, but you are only allowed to view your own profile page." 
+      flash[:warning] = "Sorry, but you are only allowed to view your own profile page." 
       redirect_to root_path
     end
   end
