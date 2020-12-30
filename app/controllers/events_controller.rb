@@ -35,6 +35,6 @@ private
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def event_params
-    params.require(:event).permit(:title, :description,:start_date, :location, :price, :duration)
+    params.require(:event).permit(:title, :description, :start_date, :location, :price, :duration)
   end  
 end
