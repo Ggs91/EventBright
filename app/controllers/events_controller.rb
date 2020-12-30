@@ -21,7 +21,7 @@ class EventsController < ApplicationController
       flash[:success] = "Your event has been created !"
       redirect_to :show
     else
-      flash[:warning] = "Your event has not been created"
+      flash.now[:warning] = "Your event has not been created"
       render :new
     end
   end
