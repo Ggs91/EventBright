@@ -26,7 +26,7 @@ puts "#{User.all.count} users created"
     description: Faker::Lorem.sentence(10),
     location: Faker::TvShows::Friends.location,
     start_date: Faker::Date.forward(days: 30),
-    duration: rand(4..12)*5,
+    duration: rand(4..60)*5,
     administrator: User.all.sample,
     price: rand(1..1000)
   )

@@ -25,6 +25,11 @@ class Event < ApplicationRecord
   end
 
   def starting_date
-    self.start_date.strftime("%d-%m-%Y") + " at " + self.start_date.strftime("%H:%M")
+    self.start_date.strftime("%Y-%m-%d at %H:%M")
+  end
+
+  def ending_date
+    end_date = self.start_date + self.duration.minutes
+    end_date.strftime("%Y-%m-%d at %H:%M")
   end
 end
