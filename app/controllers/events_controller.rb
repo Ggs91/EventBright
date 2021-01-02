@@ -17,7 +17,7 @@ class EventsController < ApplicationController
   end
 
   def create
-      @event = Event.new(event_params.merge(administrator: current_user, start_date: parsed_date, duration: parsed_duration))
+    @event = Event.new(event_params.merge(administrator: current_user, start_date: parsed_date, duration: parsed_duration, price: formated_price))
 
     if @event.save 
       flash[:success] = "Your event has been created !"
@@ -57,7 +57,7 @@ private
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def event_params
-    params.require(:event).permit(:title, :description, :location, :price)
+    params.require(:event).permit(:title, :description, :location)
   end  
 
   def ensure_current_user_is_administrator
@@ -73,5 +73,11 @@ private
 		hours = params.require(:event).permit("duration(4i)")["duration(4i)"]
     minutes = params.require(:event).permit("duration(5i)")["duration(5i)"]
 	  minutes.to_i + hours.to_i * 60 
-	end    
+  end    
+
+  def formated_price
+    price = params.require(:event).permit(:price)[:price]
+    price.to_i * 100
+  end
+  
 end

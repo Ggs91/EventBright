@@ -7,8 +7,8 @@ class Event < ApplicationRecord
   validate :start_date_cannot_be_in_the_past
   validate :duration_must_be_positif_multiple_of_5
   validates_numericality_of :price,
-    greater_than: 1,
-    less_than: 1000,
+    greater_than: 0,
+    less_than: 100000,
     only_integer: true,
     message: 'Price must be between 1 and 1000' 
   validates :duration, numericality: { only_integer: true }
