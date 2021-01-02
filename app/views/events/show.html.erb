@@ -17,4 +17,5 @@
       <li>Price: <%= @event.price %></li>
     </ul>
   </section>
+  <%= render partial: 'events/shared/participation_link', locals: {event: @event} %>
 </div>
