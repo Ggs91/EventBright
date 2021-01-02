@@ -32,4 +32,8 @@ class Event < ApplicationRecord
     end_date = self.start_date + self.duration.minutes
     end_date.strftime("%Y-%m-%d at %H:%M")
   end
+
+  def formated_price
+    self.price.to_f / 100
+  end
 end

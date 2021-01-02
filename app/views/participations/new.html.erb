@@ -1,0 +1,23 @@
+<div class="container">
+  <%= render partial: 'components/error_messages', locals: {resource: @participation} %>
+
+  <h2 class="text-center">Register for this Event !</h2>
+  <%= form_tag participations_path, method: :post do %>
+    <%= hidden_field_tag "event_id", @event.id %>
+    <article>
+      <label class="amount">
+        <span><%= @event.formated_price %> euros</span>
+      </label>
+    </article>
+    <script src="https://checkout.stripe.com/checkout.js"
+            class="stripe-button"
+            data-key="<%= Rails.configuration.stripe[:publishable_key] %>"
+            data-description="A month's subscription"
+            <%# strip "talks" in cents %>
+            data-amount="<%= @event.price %>"
+            data-label="Buy now"
+            data-currency="eur"
+            data-locale="auto">
+    </script>
+  <% end %>
+</div>

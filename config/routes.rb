@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   devise_for :users
   resources :users, only: [:show, :edit, :update]
   resources :events, only: [:new, :create, :show]
+  resources :participations, only: [:index, :new, :create, :destroy]
   get 'about', to: 'static_pages#about'
   get 'contact', to: 'static_pages#contact'
 end
