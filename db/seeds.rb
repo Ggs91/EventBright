@@ -28,7 +28,7 @@ puts "#{User.all.count} users created"
     start_date: Faker::Date.forward(days: 30),
     duration: rand(4..60)*5,
     administrator: User.all.sample,
-    price: rand(1..1000)
+    price: rand(50..1000)
   )
   e.participants.concat(User.all.sample(4))
 end
