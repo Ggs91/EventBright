@@ -14,7 +14,7 @@
       <li>Starting: <%= @event.starting_date %></li>
       <li>Ending: <%= @event.ending_date %></li>
       <li>Location: <%= @event.location %></li>
-      <li>Price: <%= @event.price %></li>
+      <li>Price: <%= @event.formated_price %> euros</li>
     </ul>
   </section>
   <%= render partial: 'events/shared/participation_link', locals: {event: @event} %>
