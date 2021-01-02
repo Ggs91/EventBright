@@ -57,8 +57,7 @@ private
     @event = Event.find(params[:event_id])
   end
 
-  def ensure
-    _current_user_is_administrator
+  def ensure_current_user_is_administrator
     current_user_is_administrator?(@event)
   end
 
