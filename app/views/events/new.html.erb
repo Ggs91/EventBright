@@ -1,11 +1,5 @@
 <div class="container">
-  <% if @event.errors.any? %>
-    <ul>
-    <% @event.errors.full_messages.each do |message| %>
-      <li><%= message %></li>
-    <% end %>
-    </ul>
-  <% end %>
+  <%= render partial: 'components/error_messages', locals: {resource: @event} %>
 
   <h2 class="text-center">Create an Event</h2>
   <%= form_for @event, :html => { novalidate: true, class: "needs-validation" } do |f| %>
