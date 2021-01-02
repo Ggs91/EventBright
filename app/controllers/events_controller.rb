@@ -1,6 +1,7 @@
 class EventsController < ApplicationController
+  before_action :authenticate_user!, except: [:index, :show]
   before_action :set_event, only: [:show, :edit, :update, :destroy]
-  before_action :authenticate_user!, only: [:new, :create]
+  before_action :ensure_current_user_is_administrator, only: [:edit, :update, :destroy]
 
   def index
     @events = Event.all.order("created_at DESC")
@@ -26,6 +27,26 @@ class EventsController < ApplicationController
     end
   end
 
+  def edit
+    @event
+  end
+
+  def update
+    if @event.update(event_params)
+      flash[:success] = "Event successfully edited !"
+      redirect_to @event
+    else
+      flash.now[:warning] = "Event couldn't be edited"
+      render :edit
+    end
+  end
+
+  def destroy
+    @event.destroy
+    flash[:success] = "Event successfully deleted"
+    redirect_to root_path
+  end
+
 private
 
   # Use callbacks to share common setup or constraints between actions.
@@ -37,6 +58,10 @@ private
   def event_params
     params.require(:event).permit(:title, :description, :location, :price)
   end  
+
+  def ensure_current_user_is_administrator
+    current_user_is_administrator?(@event)
+  end
 
 	def parsed_date
 		date = params.require(:event).permit(:start_date) 
