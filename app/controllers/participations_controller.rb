@@ -1,19 +1,21 @@
 class ParticipationsController < ApplicationController
   include EventsHelper
     before_action :authenticate_user!
-    before_action :set_event, only: [:new, :create]
-    before_action :ensure_is_not_already_particitpant, only: [:new, :create]
+    before_action :set_event, only: [:index, :new, :create]
+    before_action :ensure_current_user_is_not_already_particitpant, only: [:new, :create]
+    before_action :ensure_current_user_is_administrator, only: [:index]
     before_action :set_participation, only: [:destroy]
-    # before_action :check_administrator, only: [:index]
 
   def index
-
+    @event
   end
 
+  # ensure_current_user_is_not_already_particitpant run before new & create and return (and so cancel them) if user is already participants 
+  # https://guides.rubyonrails.org/action_controller_overview.html#filters
   def new
     @participation = Participation.new
   end
-  
+
   def create
     # Amount in cents
     @amount = @event.price
@@ -55,14 +57,14 @@ private
     @event = Event.find(params[:event_id])
   end
 
-  def check_administrator
-
+  def ensure_current_user_is_administrator
+    current_user_is_administrator?(@event)
   end
 
-  def ensure_is_not_already_particitpant #Dans la view le btn pour participer à un event change à "cancel" si current user est deja inscrit donc théroiquement pas possible de se ré-inscrir mais au cas ou 
+  def ensure_current_user_is_not_already_particitpant #Dans la view le btn pour participer à un event change à "cancel" si current user est deja inscrit donc théroiquement pas possible de se ré-inscrir mais au cas ou 
     if current_user_already_participant?(@event)
       flash[:warning] = "You're already part of this event"
-      redirect_to @event and return
+      redirect_to @event
     end
   end
 end

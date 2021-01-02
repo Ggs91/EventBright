@@ -12,10 +12,10 @@
     <script src="https://checkout.stripe.com/checkout.js"
             class="stripe-button"
             data-key="<%= Rails.configuration.stripe[:publishable_key] %>"
-            data-description="A month's subscription"
+            data-description="Join the event !"
             <%# strip "talks" in cents %>
             data-amount="<%= @event.price %>"
-            data-label="Buy now"
+            data-label="Register Now"
             data-currency="eur"
             data-locale="auto">
     </script>
