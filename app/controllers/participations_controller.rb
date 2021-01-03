@@ -1,7 +1,8 @@
 class ParticipationsController < ApplicationController
   include EventsHelper
     before_action :authenticate_user!
-    before_action :set_event, only: [:index, :new, :create]
+    before_action :set_event, only: [:index, :new, :create, :thanks]
+    before_action :amount_to_be_charged, only: [:new, :create, :thanks]
     before_action :ensure_current_user_is_not_already_particitpant, only: [:new, :create]
     before_action :ensure_current_user_is_administrator, only: [:index]
     before_action :set_participation, only: [:destroy]
@@ -17,24 +18,25 @@ class ParticipationsController < ApplicationController
   end
 
   def create
-    # Amount in cents
-    @amount = @event.price
+    #Best practice for stripe integration
+    # https://rails.devcamp.com/trails/ruby-gem-walkthroughs/campsites/payment/guides/how-to-integrate-stripe-payments-in-a-rails-application-charges
 
-    customer = Stripe::Customer.create({
-      email: params[:stripeEmail],
-      source: params[:stripeToken],
-    })
+    customer = StripeTool.create_customer(
+                 email: params[:stripeEmail],
+                 stripe_token: params[:stripeToken],
+               )
 
-    charge = Stripe::Charge.create({
-      customer: customer.id,
-      amount: @amount,
-      description: 'Rails Stripe customer',
-      currency: 'eur',
-    })
+    charge = StripeTool.create_charge(
+               customer_id: customer.id,
+               amount: @amount,
+               description: 'Rails Stripe Customer',
+               currency: 'eur',
+             )
 
     Participation.create(user: current_user, event: @event)
+
     flash[:success] = "Your are part of this event !"
-    redirect_to @event
+    redirect_to thanks_path(event_id: @event.id)
 
     rescue Stripe::CardError => e
       flash[:error] = e.message
@@ -45,6 +47,9 @@ class ParticipationsController < ApplicationController
     @participation.destroy
     flash[:info] = "You are no longer part of this event"
     redirect_back(fallback_location: root_path)
+  end
+
+  def thanks
   end
   
 private
@@ -60,6 +65,12 @@ private
   def ensure_current_user_is_administrator
     current_user_is_administrator?(@event)
   end
+
+  def amount_to_be_charged
+    # Amount in cents
+    @amount = @event.price
+  end
+
 
   def ensure_current_user_is_not_already_particitpant #Dans la view le btn pour participer à un event change à "cancel" si current user est deja inscrit donc théroiquement pas possible de se ré-inscrir mais au cas ou 
     if current_user_already_participant?(@event)
