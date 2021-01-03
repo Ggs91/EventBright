@@ -6,7 +6,7 @@
     <%= hidden_field_tag "event_id", @event.id %>
     <article>
       <label class="amount">
-        <span><%= @event.formated_price %> euros</span>
+        <span><%= pretty_amount(@amount) %></span>
       </label>
     </article>
     <script src="https://checkout.stripe.com/checkout.js"
@@ -14,7 +14,7 @@
             data-key="<%= Rails.configuration.stripe[:publishable_key] %>"
             data-description="Join the event !"
             <%# strip "talks" in cents %>
-            data-amount="<%= @event.price %>"
+            data-amount="<%= @amount %>"
             data-label="Register Now"
             data-currency="eur"
             data-locale="auto">

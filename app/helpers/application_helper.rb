@@ -10,4 +10,8 @@ module ApplicationHelper
       when 'alert' then 'alert-danger' #override devise's "alert" flash to work with bootstrap
     end
   end
+  #format price 
+  def pretty_amount(amount_in_cents)
+    number_to_currency(amount_in_cents.to_f / 100, locale: :fr)
+  end
 end
