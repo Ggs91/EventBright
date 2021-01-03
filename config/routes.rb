@@ -6,4 +6,5 @@ Rails.application.routes.draw do
   resources :participations, only: [:index, :new, :create, :destroy]
   get 'about', to: 'static_pages#about'
   get 'contact', to: 'static_pages#contact'
+  get 'thanks', to: 'participations#thanks', as: 'thanks'
 end
