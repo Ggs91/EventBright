@@ -6,7 +6,7 @@
     <%= hidden_field_tag "event_id", @event.id %>
     <article>
       <label class="amount">
-        <span><%= @event.formated_price %> euros</span>
+        <span><%= pretty_amount(@event.price) %></span>
       </label>
     </article>
     <script src="https://checkout.stripe.com/checkout.js"
