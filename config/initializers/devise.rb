@@ -9,12 +9,12 @@
 # Use this hook to configure devise mailer, warden hooks and so forth.
 # Many of these configuration options can be set straight in your model.
 Devise.setup do |config|
-  # The secret key used by Devise. Devise uses this key to generate
   # random tokens. Changing this key will render invalid all existing
+  # The secret key used by Devise. Devise uses this key to generate
   # confirmation, reset password and unlock tokens in the database.
   # Devise will use the `secret_key_base` as its `secret_key`
-  # by default. You can change it below and use your own secret key.
   # config.secret_key = '82f00ed1aad9af01eabf7133e75d325aa831269ba06fa8035e667f49f72e8418364881acd185b6d1c1c092cc6e87782f0d9c4b728b36457384be1da4b30196bb'
+  # by default. You can change it below and use your own secret key.
 
   # ==> Controller configuration
   # Configure the parent class to the devise controllers.
@@ -78,8 +78,8 @@ Devise.setup do |config|
   # For API-only applications to support authentication "out-of-the-box", you will likely want to
   # enable this with :database unless you are using a custom strategy.
   # The supported strategies are:
-  # :database      = Support basic authentication with authentication key + password
   # config.http_authenticatable = false
+  # :database      = Support basic authentication with authentication key + password
 
   # If 401 status code should be returned for AJAX requests. True by default.
   # config.http_authenticatable_on_xhr = true
@@ -159,8 +159,8 @@ Devise.setup do |config|
   # unconfirmed_email column, and copied to email column on successful confirmation.
   config.reconfirmable = true
 
-  # Defines which key will be used when confirming an account
   # config.confirmation_keys = [:email]
+  # Defines which key will be used when confirming an account
 
   # ==> Configuration for :rememberable
   # The time the user will be remembered without asking for credentials again.
@@ -188,7 +188,7 @@ Devise.setup do |config|
   # ==> Configuration for :timeoutable
   # The time you want to timeout the user session without activity. After this
   # time the user will be asked for credentials again. Default is 30 minutes.
-  # config.timeout_in = 30.minutes
+  config.timeout_in = 5.hours
 
   # ==> Configuration for :lockable
   # Defines which strategy will be used to lock an account.
@@ -196,8 +196,8 @@ Devise.setup do |config|
   # :none            = No lock strategy. You should handle locking by yourself.
   # config.lock_strategy = :failed_attempts
 
-  # Defines which key will be used when locking and unlocking an account
   # config.unlock_keys = [:email]
+  # Defines which key will be used when locking and unlocking an account
 
   # Defines which strategy will be used to unlock an account.
   # :email = Sends an unlock link to the user email

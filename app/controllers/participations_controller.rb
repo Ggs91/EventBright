@@ -3,6 +3,7 @@ class ParticipationsController < ApplicationController
     before_action :authenticate_user!
     before_action :set_event, only: [:index, :new, :create, :thanks]
     before_action :amount_to_be_charged, only: [:new, :create, :thanks]
+    before_action :description, only: [:new, :create]
     before_action :ensure_current_user_is_not_already_particitpant, only: [:new, :create]
     before_action :ensure_current_user_is_administrator, only: [:index]
     before_action :set_participation, only: [:destroy]
@@ -29,7 +30,7 @@ class ParticipationsController < ApplicationController
     charge = StripeTool.create_charge(
                customer_id: customer.id,
                amount: @amount,
-               description: 'Rails Stripe Customer',
+               description: @description,
                currency: 'eur',
              )
 
@@ -71,6 +72,9 @@ private
     @amount = @event.price
   end
 
+  def description
+    @description = @event.title
+  end
 
   def ensure_current_user_is_not_already_particitpant #Dans la view le btn pour participer à un event change à "cancel" si current user est deja inscrit donc théroiquement pas possible de se ré-inscrir mais au cas ou 
     if current_user_already_participant?(@event)
