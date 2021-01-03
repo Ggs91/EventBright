@@ -20,17 +20,17 @@ class ParticipationsController < ApplicationController
     # Amount in cents
     @amount = @event.price
 
-    customer = Stripe::Customer.create({
-      email: params[:stripeEmail],
-      source: params[:stripeToken],
-    })
+    customer = StripeTool.create_customer(
+                 email: params[:stripeEmail],
+                 stripe_token: params[:stripeToken],
+               )
 
-    charge = Stripe::Charge.create({
-      customer: customer.id,
-      amount: @amount,
-      description: 'Rails Stripe customer',
-      currency: 'eur',
-    })
+    charge = StripeTool.create_charge(
+               customer_id: customer.id,
+               amount: @amount,
+               description: 'Rails Stripe Customer',
+               currency: 'eur',
+             )
 
     Participation.create(user: current_user, event: @event)
     flash[:success] = "Your are part of this event !"
