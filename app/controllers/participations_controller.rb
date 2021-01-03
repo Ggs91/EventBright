@@ -1,8 +1,8 @@
 class ParticipationsController < ApplicationController
   include EventsHelper
     before_action :authenticate_user!
-    before_action :set_event, only: [:index, :new, :create]
-    before_action :amount_to_be_charged, only: [:new, :create]
+    before_action :set_event, only: [:index, :new, :create, :thanks]
+    before_action :amount_to_be_charged, only: [:new, :create, :thanks]
     before_action :ensure_current_user_is_not_already_particitpant, only: [:new, :create]
     before_action :ensure_current_user_is_administrator, only: [:index]
     before_action :set_participation, only: [:destroy]
@@ -34,8 +34,9 @@ class ParticipationsController < ApplicationController
              )
 
     Participation.create(user: current_user, event: @event)
+
     flash[:success] = "Your are part of this event !"
-    redirect_to @event
+    redirect_to thanks_path(event_id: @event.id)
 
     rescue Stripe::CardError => e
       flash[:error] = e.message
@@ -46,6 +47,9 @@ class ParticipationsController < ApplicationController
     @participation.destroy
     flash[:info] = "You are no longer part of this event"
     redirect_back(fallback_location: root_path)
+  end
+
+  def thanks
   end
   
 private
