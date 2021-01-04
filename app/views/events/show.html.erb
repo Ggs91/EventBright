@@ -10,7 +10,7 @@
     <h2>Event Details:</h2>
     <ul>
       <li>N° of participants: <%= @event.participants.count %></li>
-      <li>Administrator: <%= @event.administrator.first_name %></li>
+      <li>Administrator: <%= @event.administrator.username %></li>
       <li>Starting: <%= @event.starting_date %></li>
       <li>Ending: <%= @event.ending_date %></li>
       <li>Location: <%= @event.location %></li>
