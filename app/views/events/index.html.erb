@@ -25,7 +25,7 @@
               <h5 class="card-title"><%= event.title %></h5>
               <h6 class="card-subtitle mb-2 text-muted"><%= event.created_at.strftime("%Y-%m-%d at %H:%M") %></h6>
               <p class="card-text"><%= event.description %></p>
-              <p class="card-text">Administrator: <%= event.administrator.first_name %></p>
+              <p class="card-text">Administrator: <%= event.administrator.username%></p>
                <%= link_to 'See event', event_path(event.id), class: 'card-link' %>
             </div>
           </div>
