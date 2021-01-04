@@ -4,7 +4,7 @@
       <% @event.participants.each do |participant| %>
         <div class="list-group-item flex-column align-items-start">
           <div class="d-flex w-100 justify-content-between">
-            <h5 class="mb-1"><%= participant.first_name %></h5>
+            <h5 class="mb-1"><%= participant.username%></h5>
             <h5 class="mb-1"><%= participant.email %></h5>
             <small><%= time_ago_in_words(participation_where(participant, @event).created_at) %></small>
         </div>

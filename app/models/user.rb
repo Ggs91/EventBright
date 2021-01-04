@@ -14,13 +14,13 @@ class User < ApplicationRecord
   validates :username,
     presence: true,
     uniqueness: true
-  validates :first_name, :last_name,
-    presence: true,
-    on: :update
-  validates :description,
-    presence: true,
-    length: { minimum: 5 },
-    on: :update
+  # validates :first_name, :last_name,
+  #   presence: true,
+  #   on: :update
+  # validates :description,
+  #   presence: true,
+  #   length: { minimum: 5 },
+  #   on: :update
   # Callbacks
   after_create :welcome_send
 
