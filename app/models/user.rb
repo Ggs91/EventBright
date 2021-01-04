@@ -9,13 +9,15 @@ class User < ApplicationRecord
   has_many :attended_events, through: :participations, source: :event, dependent: :destroy
   has_many :administrated_events, foreign_key: "administrator_id", class_name: "Event", dependent: :destroy
   # Validations
+  validates :username,
+    uniqueness: true
   validates :first_name, :last_name,
-     presence: true,
-     on: :update
+    presence: true,
+    on: :update
   validates :description,
-     presence: true,
-     length: { minimum: 5 },
-     on: :update
+    presence: true,
+    length: { minimum: 5 },
+    on: :update
   # Callbacks
   after_create :welcome_send
 
