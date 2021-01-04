@@ -12,6 +12,7 @@ class User < ApplicationRecord
   has_many :administrated_events, foreign_key: "administrator_id", class_name: "Event", dependent: :destroy
   # Validations
   validates :username,
+    presence: true,
     uniqueness: true
   validates :first_name, :last_name,
     presence: true,
