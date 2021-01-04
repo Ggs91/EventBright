@@ -3,6 +3,7 @@ class EventsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
   before_action :set_event, only: [:show, :edit, :update, :destroy]
   before_action :ensure_current_user_is_administrator, only: [:edit, :update, :destroy]
+  before_action :amount_to_be_charged, only: [:show]
 
   def index
     @events = Event.all.order("created_at DESC")
@@ -79,5 +80,9 @@ private
     price = params.require(:event).permit(:price)[:price]
     price.to_i * 100
   end
-  
+
+  def amount_to_be_charged
+    # Amount in cents
+    @amount = @event.price
+  end
 end
