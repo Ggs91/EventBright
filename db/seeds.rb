@@ -10,6 +10,7 @@ User.reset_pk_sequence
 	first_name = Faker::Name.first_name
 	last_name = Faker::Name.last_name
 	user = User.create!(
+		username: "username#{rand(1..1000)}",
 		first_name: first_name,
 		last_name: last_name,
 		email: first_name + last_name + "@yopmail.com",
