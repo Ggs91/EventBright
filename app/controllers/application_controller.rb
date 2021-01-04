@@ -5,12 +5,10 @@ class ApplicationController < ActionController::Base
 
   protected
 
-    def configure_permitted_parameters
-      devise_parameter_sanitizer.permit(:sign_up,
-        keys: [:username, :email, :password, :password_confirmation])
-      devise_parameter_sanitizer.permit(:sign_in,
-        keys: [{ remember_me: [] }, :login, :password, :password_confirmation])
-      devise_parameter_sanitizer.permit(:account_update,
-        keys: [:username, :email, :password_confirmation, :current_password])
-    end
+  def configure_permitted_parameters
+    devise_parameter_sanitizer.permit(:sign_up,
+      keys: [:email, :username]) # authentication key is set as "login" and not "email" anymore, so we have to manually permit email
+    devise_parameter_sanitizer.permit(:account_update,
+      keys: [:first_name, :last_name, :description, :email])
+  end
 end
