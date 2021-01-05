@@ -7,10 +7,10 @@ class Event < ApplicationRecord
   validate :start_date_cannot_be_in_the_past
   validate :duration_must_be_positif_multiple_of_5
   validates_numericality_of :price,
-    greater_than: 0,
+    greater_than_or_equal_to:  0,
     less_than: 100000,
     only_integer: true,
-    message: 'Price must be between 1 and 1000' 
+    message: 'Price must be between 0 and 1000' 
   validates :duration, numericality: { only_integer: true }
   validates :title, presence: true, length: { in: 5..140 }
   validates :description, presence: true, length: { in: 5..1000 }
@@ -31,5 +31,9 @@ class Event < ApplicationRecord
   def ending_date
     end_date = self.start_date + self.duration.minutes
     end_date.strftime("%Y-%m-%d at %H:%M")
+  end
+
+  def is_free?
+    self.price == 0
   end
 end
