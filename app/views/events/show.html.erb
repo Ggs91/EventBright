@@ -11,8 +11,8 @@
     <ul>
       <li>N° of participants: <%= @event.participants.count %></li>
       <li>Administrator: <%= @event.administrator.username %></li>
-      <li>Starting: <%= @event.starting_date %></li>
-      <li>Ending: <%= @event.ending_date %></li>
+      <li>Starting: <%= @event.starting_date_time %></li>
+      <li>Ending: <%= @event.ending_date_date_time %></li>
       <li>Location: <%= @event.location %></li>
       <li>Price: <%= pretty_amount(@amount) %></li>
     </ul>
