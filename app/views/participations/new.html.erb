@@ -2,23 +2,28 @@
   <%= render partial: 'components/error_messages', locals: {resource: @participation} %>
 
   <h2 class="text-center">Register for this Event !</h2>
-  <%= form_tag participations_path, method: :post do %>
-    <%= hidden_field_tag "event_id", @event.id %>
-    <article>
-      <label class="amount">
-        <span><%= pretty_amount(@amount) %></span>
-      </label>
-    </article>
-    <script src="https://checkout.stripe.com/checkout.js"
-            class="stripe-button"
-            data-key="<%= Rails.configuration.stripe[:publishable_key] %>"
-            data-description="<%= @description %>"
-            <%# strip "talks" in cents %>
-            data-amount="<%= @amount %>"
-            data-label="Register Now"
-            data-currency="eur"
-            data-email="<%= current_user.email %>"p
-            data-locale="auto">
-    </script>
+
+  <% if @event.is_free? %>
+    <%= link_to 'Join Now', participations_path(event_id: @event.id), method: :post, class:'btn btn-primary' %>
+  <% else %>
+    <%= form_tag participations_path, method: :post do %>
+      <%= hidden_field_tag "event_id", @event.id %>
+      <article>
+        <label class="amount">
+          <span><%= pretty_amount(@amount) %></span>
+        </label>
+      </article>
+      <script src="https://checkout.stripe.com/checkout.js"
+              class="stripe-button"
+              data-key="<%= Rails.configuration.stripe[:publishable_key] %>"
+              data-description="<%= @description %>"
+              <%# strip "talks" in cents %>
+              data-amount="<%= @amount %>"
+              data-label="Register Now"
+              data-currency="eur"
+              data-email="<%= current_user.email %>"p
+              data-locale="auto">
+      </script>
+    <% end %>
   <% end %>
 </div>
