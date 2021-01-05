@@ -4,7 +4,7 @@ class EventsController < ApplicationController
   before_action :set_event, only: [:show, :edit, :update, :destroy]
   before_action :ensure_current_user_is_administrator, only: [:edit, :update, :destroy]
   before_action :amount_to_be_charged, only: [:show]
-
+  
   def index
     @events = Event.all.order("created_at DESC")
   end
@@ -18,8 +18,8 @@ class EventsController < ApplicationController
   end
 
   def create
-    @event = Event.new(event_params.merge(administrator: current_user, start_date: parsed_date, duration: parsed_duration, price: formated_price))
-
+    @event = Event.new(event_params.merge(administrator: current_user, start_date: parsed_datetime, duration: parsed_duration, price: formated_price))
+    
     if @event.save 
       flash[:success] = "Your event has been created !"
       redirect_to @event
@@ -65,9 +65,10 @@ private
     current_user_is_administrator?(@event)
   end
 
-	def parsed_date
-		date = params.require(:event).permit(:start_date) 
-	  DateTime.parse("#{date}")
+	def parsed_datetime
+    date = params.require(:event).permit(:starting_date)[:starting_date]
+    time = params.require(:event).permit(:starting_time)[:starting_time]
+	  DateTime.parse("#{date} #{time}")
 	end    
 
   def parsed_duration
