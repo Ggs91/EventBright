@@ -1,6 +1,8 @@
 <div class="container">
   <h1 class="text-center">Thank you !</h1>
-  <p>You paiment of <%= pretty_amount(@amount) %> has been accepted !</p>
+  <% unless @event.is_free? %>
+    <p>You paiment of <%= pretty_amount(@amount) %> has been accepted !</p>
+  <% end %>
   <p>You are now part of the event: <%= @event.title %> ! You joined <%= @event.participants.count %> other participant(s)</p>
   <p>Go back to the event's page: <%= link_to @event.title, @event %></p>
   <p>Go back to Home page: <%= link_to 'Home', root_path %></p>

@@ -19,29 +19,37 @@ class ParticipationsController < ApplicationController
   end
 
   def create
-    #Best practice for stripe integration
-    # https://rails.devcamp.com/trails/ruby-gem-walkthroughs/campsites/payment/guides/how-to-integrate-stripe-payments-in-a-rails-application-charges
+    if @amount == 0 
+      Participation.create(user: current_user, event: @event)
+      flash[:success] = "Your are part of this event !"
+      redirect_to thanks_path(event_id: @event.id)
+    else
+      begin
+      #Best practice for stripe integration
+      # https://rails.devcamp.com/trails/ruby-gem-walkthroughs/campsites/payment/guides/how-to-integrate-stripe-payments-in-a-rails-application-charges
 
-    customer = StripeTool.create_customer(
-                 email: params[:stripeEmail],
-                 stripe_token: params[:stripeToken],
-               )
+      customer = StripeTool.create_customer(
+                  email: params[:stripeEmail],
+                  stripe_token: params[:stripeToken],
+                )
 
-    charge = StripeTool.create_charge(
-               customer_id: customer.id,
-               amount: @amount,
-               description: @description,
-               currency: 'eur',
-             )
+      charge = StripeTool.create_charge(
+                customer_id: customer.id,
+                amount: @amount,
+                description: @description,
+                currency: 'eur',
+              )
 
-    Participation.create(user: current_user, event: @event)
+      Participation.create(user: current_user, event: @event)
 
-    flash[:success] = "Your are part of this event !"
-    redirect_to thanks_path(event_id: @event.id)
+      flash[:success] = "Your are part of this event !"
+      redirect_to thanks_path(event_id: @event.id)
 
-    rescue Stripe::CardError => e
-      flash[:error] = e.message
-      redirect_to @event
+      rescue Stripe::CardError => e
+        flash[:error] = e.message
+        redirect_to @event
+      end
+    end
   end
   
   def destroy
