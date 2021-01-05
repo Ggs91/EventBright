@@ -1,4 +1,7 @@
 class Event < ApplicationRecord
+  # virtual attributes to retrieve date and time in 2 different fields
+  attr_accessor :starting_date, :starting_time
+
   # Associations
   belongs_to :administrator, class_name: "User"
   has_many :participations, dependent: :destroy
