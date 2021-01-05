@@ -27,11 +27,11 @@ class Event < ApplicationRecord
     errors.add(:duration, "must be a multiple of 5") unless duration.present? && duration > 0 && duration % 5 == 0
   end
 
-  def starting_date
+  def starting_date_time
     self.start_date.strftime("%Y-%m-%d at %H:%M")
   end
 
-  def ending_date
+  def ending_date_date_time
     end_date = self.start_date + self.duration.minutes
     end_date.strftime("%Y-%m-%d at %H:%M")
   end
