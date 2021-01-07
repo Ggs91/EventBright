@@ -8,12 +8,10 @@
 
   <section>
     <h2>Your personnal infos:</h2>
+    
     <p>Profile picture</p>
-      <%if current_user.avatar.attached?%>
-        <%= image_tag current_user.avatar, alt: 'avatar' %>
-      <%else%>
-        <p>No profile picture</p>
-      <%end%>
+    <%= current_user_avatar %>
+
     <ul class="user-infos">
       <li>Username: <%= current_user.username %></li>
       <li>First name: <%= current_user.first_name %></li>

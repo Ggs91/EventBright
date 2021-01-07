@@ -2,11 +2,8 @@
 
   <h3>Add or change your profile picture</h3>.
   <div class="form-group">
-    <% if current_user.avatar.attached? %>
-      <%= image_tag current_user.avatar, alt: 'avatar', style: "width:200px; display: block" %>
-    <% else%>
-      <p>No profile picture</p>
-    <% end %>
+
+    <%= current_user_avatar %>
 
     <%= form_tag user_avatars_path(current_user), multipart: true do %>
       <%= label_tag :avatar %>
