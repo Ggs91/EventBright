@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   root 'events#index'
   devise_for :users
   resources :users, only: [:show, :edit, :update] do 
-    resource :avatars, only: [:create, :destroy]
+    resource :avatar, only: [:create, :destroy]
   end
   resources :events
   resources :participations, only: [:index, :new, :create, :destroy]
