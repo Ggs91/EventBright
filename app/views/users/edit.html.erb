@@ -1,5 +1,19 @@
 <div class="container">
 
+  <h3>Add or change your profile picture</h3>.
+  <div class="form-group">
+
+    <%= current_user_avatar %>
+
+    <%= form_tag user_avatars_path(current_user), multipart: true do %>
+      <%= label_tag :avatar %>
+      <%= file_field_tag :avatar, class:"form-control" %>
+      <%= submit_tag "upload", class:"btn btn-primary" %>
+    <% end %>
+  </div>
+
+  <h3>Edit your personnal infos:</h3>
+
   <%= form_for @user, :html => { novalidate: true, class: "needs-validation" } do |f| %>
 
     <div class="form-group">
