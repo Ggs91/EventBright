@@ -37,6 +37,11 @@
     <%= f.number_field :price, in: 1...1000, class: "form-control" %>
   </div>
 
+  <% resource.event_images.each do |img| %>
+    <%= image_tag img, size: 200  %>
+    <%= link_to 'delete', event_image_path(resource, img), method: :delete, class:'btn btn-danger' %>
+  <% end %>
+
   <div class="form-group">
     <%= f.label :images %><br>
     <%= f.file_field :images, multiple: true, accept: ".png,.jpeg,.jpg" %>
