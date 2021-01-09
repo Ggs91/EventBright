@@ -6,6 +6,10 @@
     </div>
   </div>
 
+ <% display_event_images(@event).each do |img| %>
+    <%= img %>
+ <% end %>
+
   <section>
     <h2>Event Details:</h2>
     <ul>
