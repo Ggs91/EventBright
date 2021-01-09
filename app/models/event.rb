@@ -10,7 +10,10 @@ class Event < ApplicationRecord
   # Validations
   validate :start_date_cannot_be_in_the_past
   validate :duration_must_be_positif_multiple_of_5
-  validate :max_of_3_attached_images
+  validates :images,
+    attached: true,
+    content_type: ['image/png', 'image/jpg', 'image/jpeg'],
+    limit: { min: 0, max: 3, message: 'Maximum 3 images allowed' }                                    
   validates_numericality_of :price,
     greater_than_or_equal_to:  0,
     less_than: 100000,
@@ -29,10 +32,6 @@ class Event < ApplicationRecord
     errors.add(:duration, "must be a multiple of 5") unless duration.present? && duration > 0 && duration % 5 == 0
   end
 
-  def max_of_3_attached_images
-    errors.add(:images, "3 images maximum allowed") unless images.to_a.count <= 3
-  end
-
   def starting_date_time
     self.start_date.strftime("%Y-%m-%d at %H:%M")
   end
@@ -44,5 +43,10 @@ class Event < ApplicationRecord
 
   def is_free?
     self.price == 0
+  end
+
+  #return only the attachement objects associated with the events that or saved in db
+  def event_images 
+    images.select{ |img| img.persisted? }
   end
 end
