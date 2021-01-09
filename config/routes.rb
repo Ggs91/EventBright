@@ -5,7 +5,7 @@ Rails.application.routes.draw do
     resource :avatar, only: [:create, :destroy]
   end
   resources :events do 
-    resource :images, only: [:create, :destroy]
+    resources :images, only: [:create, :destroy]
   end
   resources :participations, only: [:index, :new, :create, :destroy]
   get 'about', to: 'static_pages#about'
