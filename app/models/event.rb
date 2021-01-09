@@ -12,6 +12,7 @@ class Event < ApplicationRecord
   validate :duration_must_be_positif_multiple_of_5
   validates :images,
     attached: true,
+    allow_blank: true,
     content_type: ['image/png', 'image/jpg', 'image/jpeg'],
     limit: { min: 0, max: 3, message: 'Maximum 3 images allowed' }                                    
   validates_numericality_of :price,
