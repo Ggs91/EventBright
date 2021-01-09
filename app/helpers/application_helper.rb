@@ -10,16 +10,27 @@ module ApplicationHelper
       when 'alert' then 'alert-danger' #override devise's "alert" flash to work with bootstrap
     end
   end
+
   # Format price 
   def pretty_amount(amount_in_cents)
     amount_in_cents == 0 ? 'Free' : number_to_currency(amount_in_cents.to_f / 100, locale: :fr)
   end
+
   # Avatar helper
   def current_user_avatar
     if current_user.avatar.attached?
       image_tag current_user.avatar, alt: 'avatar', size: 200, style: "display: block"
     else
       image_tag 'default-avatar.png', alt: 'default-avatar', size: 200, style: "display: block"
+    end 
+  end
+
+  # Event images 
+  def event_images(event)
+    if event.images.attached?
+      event.images.map { |img| image_tag img.blob, alt: 'default-event-image', size: 200 }
+    else
+      [image_tag('default-event-image.png', alt: 'default-event-image', size: 200)]
     end 
   end
 end
