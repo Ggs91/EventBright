@@ -6,7 +6,7 @@ class EventsController < ApplicationController
   before_action :amount_to_be_charged, only: [:show]
   
   def index
-    @events = Event.all..with_attached_images.order("created_at DESC")
+    @events = Event.all.with_attached_images.order("created_at DESC")
   end
   
   def show
@@ -58,7 +58,7 @@ private
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def event_params
-    params.require(:event).permit(:title, :description, :location, images: [])
+    params.require(:event).permit(:title, :description, :location, :price, images: [])
   end  
 
   def ensure_current_user_is_administrator
