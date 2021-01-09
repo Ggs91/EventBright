@@ -10,6 +10,7 @@ class Event < ApplicationRecord
   # Validations
   validate :start_date_cannot_be_in_the_past
   validate :duration_must_be_positif_multiple_of_5
+  validate :max_of_3_attached_images
   validates_numericality_of :price,
     greater_than_or_equal_to:  0,
     less_than: 100000,
@@ -26,6 +27,10 @@ class Event < ApplicationRecord
 
   def duration_must_be_positif_multiple_of_5
     errors.add(:duration, "must be a multiple of 5") unless duration.present? && duration > 0 && duration % 5 == 0
+  end
+
+  def max_of_3_attached_images
+    errors.add(:images, "3 images maximum allowed") unless images.to_a.count <= 3
   end
 
   def starting_date_time
