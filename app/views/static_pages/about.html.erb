@@ -1,19 +1,78 @@
-<div class="aboutus-section">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-3 col-sm-6 col-xs-12">
-                    <div class="aboutus">
-                        <h2 class="aboutus-title">About Us</h2>
-                        <p class="aboutus-text">Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in.</p>
-                        <p class="aboutus-text">This is Photoshop's version of Lorem Ipsum. Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum auctor, nisi elit consequat ipsum, nec sagittis sem</p>
-                        <a class="aboutus-more" href="#">read more</a>
-                    </div>
+<div class="container">
+
+    <!-- Page Heading/Breadcrumbs -->
+    <h1 class="mt-4 mb-3">About Me</h1>
+
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <%=link_to 'Home', root_path %>
+        </li>
+        <li class="breadcrumb-item active">About</li>
+    </ol>
+
+    <!-- Intro Content -->
+    <div class="row">
+        <div class="col-lg-6">
+            <%= image_tag "georgesatalla.jpg", class: "img-fluid rounded mb-4", alt:"Georges ATALLA" %>
+        </div>
+        <div class="col-lg-6">
+        <h2>Georges ATALLA</h2>
+        <h3>Ruby on Rails developer</h3>
+        <p>Hi there! I'm a Ruby on Rails developer, I also love JavaScript, HTML & CSS !</p>
+        <p>This is actually one of my project, a full CRUD RoR Eventbrite clone !</p>
+        <p>Checkout my porfolio that I've created from scratch:  <%=link_to 'georgesatalla.com', 'https://www.georgesatalla.com/', target:"_blank"  %> </p>
+        <p>HIRE ME ! I'm looking for a fulltime job with a team :) </p>
+        <p>Github: <%=link_to 'Ggs91', 'https://github.com/Ggs91/', target:"_blank" %> </p>
+        <p>Contact: <a href="mailto:georges_atalla@hotmail.fr">georges_atalla@hotmail.fr</a></p>
+        </div>
+    </div>
+    <!-- /.row -->
+
+    <!-- Projects -->
+    <h2>Some of my projects</h2>
+
+    <div class="row">
+        <div class="col-lg-4 mb-4">
+            <div class="card h-100 text-center">
+                <%= image_tag "sharemyhobby.png", alt:'tictactoe'%>
+                <div class="card-body">
+                  <h4 class="card-title">ShareMyHobby</h4>
+                   <p class="card-text">Large Ruby on Rails team project after a 3 months bootcamp at The Hacking Project.</p>
+                  <p class="card-text"><%= link_to "See on Github", "https://github.com/Ggs91/ShareMyHobby", target:"_blank" %></p>
                 </div>
-                <div class="col-md-5 col-sm-6 col-xs-12">
-                    <div class="aboutus-banner">
-                        <img src="https://weezevent.com/wp-content/uploads/2018/06/organiser-evenement-professionnel-original-weezevent.jpg" alt="">
-                    </div>
+                <div class="card-footer">
+                    <%= link_to "See Live", "https://share-my-hobby-production.herokuapp.com/", target:"_blank"  %>
                 </div>
             </div>
         </div>
+        <div class="col-lg-4 mb-4">
+            <div class="card h-100 text-center">
+                <%= image_tag "tictactoejs.png", alt:'tictactoe'%>
+                <div class="card-body">
+                  <h4 class="card-title">TicTacToe in vanilla JS</h4>
+                   <p class="card-text">Game logic and front end from scratch</p>
+                  <p class="card-text"><%= link_to "See on Github", "https://github.com/Ggs91/JS-TicTacToe", target:"_blank" %></p>
+                </div>
+                <div class="card-footer">
+                    <%= link_to "See Live", "https://ggs91.github.io/JS-TicTacToe/dist/index.html", target:"_blank"  %>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 mb-4">
+            <div class="card h-100 text-center">
+                <%= image_tag "secretlab.png", alt:'secretlab'%>
+                <div class="card-body">
+                  <h4 class="card-title">Secretlab blog webpage</h4>
+                   <p class="card-text">A static webpage replica of Secretlab blog.</p>
+                  <p class="card-text"><%= link_to "See on Github", "https://github.com/Ggs91/secretlab_static_page_replica", target:"_blank" %></p>
+                </div>
+                <div class="card-footer">
+                    <%= link_to "See Live", "https://ggs91.github.io/secretlab_static_page_replica/", target:"_blank"  %>
+                </div>
+            </div>
+        </div>
+
     </div>
+    <!-- /.row -->
+</div>
+    <!-- /.container -->
