@@ -6,7 +6,7 @@ class EventsController < ApplicationController
   before_action :amount_to_be_charged, only: [:show]
   
   def index
-    @events = Event.all.with_attached_images.order("created_at DESC")
+    @pagy, @events = pagy(Event.all.with_attached_images.order("created_at DESC"), items: 9)
   end
   
   def show
