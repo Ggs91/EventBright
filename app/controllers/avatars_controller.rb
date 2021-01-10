@@ -5,4 +5,9 @@ class AvatarsController < ApplicationController
     current_user.avatar.attach(params[:avatar]) if params[:avatar].present?
     redirect_back(fallback_location: root_path)
   end
+
+  def destroy
+    current_user.avatar.purge
+    redirect_back(fallback_location: root_path)
+  end
 end
