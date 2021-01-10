@@ -26,11 +26,11 @@ module ApplicationHelper
   end
 
   # Event images 
-  def display_event_images(event)
+  def display_event_images(event, image_class= "")
     if event.images.attached?
-      event.images.map { |img| image_tag img.blob, alt: 'default-event-image' }
+      event.images.map { |img| image_tag img.blob, alt: 'default-event-image', class: image_class }
     else
-      [image_tag('default-event-image.png', alt: 'default-event-image')]
+      [image_tag('default-event-image.png', alt: 'default-event-image', class: image_class )]
     end 
   end
 end
