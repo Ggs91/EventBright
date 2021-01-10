@@ -13,7 +13,5 @@
  *= require bootstrap.min
  *= require modern-business
  *= require bootstrap_alert
- *= require static_pages
- *= require users
  *= require main
  */

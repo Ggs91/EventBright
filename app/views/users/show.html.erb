@@ -1,42 +1,57 @@
 <div class="container">
-  <div role="main">
-    <div class="starter-template">
-      <h1>Your Profile</h1>
-      <p class="lead">Find your personal infos & the events you're administrating</p>
-    </div>
+
+  <!-- Page Heading/Breadcrumbs -->
+  <h1 class="mt-4 mb-3">Your Profile</h1>
+    <p class="lead">Find your personal infos & the events you're administrating</p>
+
+  <ol class="breadcrumb">
+      <li class="breadcrumb-item">
+          <%=link_to 'Home', root_path %>
+      </li>
+      <li class="breadcrumb-item active">Profile</li>
+  </ol>
+
+  <!-- Contact Detail Column -->
+  <div class="row">
+      <div class="col-lg-4">
+        <%= current_user_avatar %>
+      </div>
+      <div class="col-lg-8">
+        <h2>Your personal infos:</h2>
+        <ul>
+          <li><b>Username:</b> <%= current_user.username %></li>
+          <li><b>First name:</b> <%= current_user.first_name %></li>
+          <li><b>Last name:</b> <%= current_user.last_name %></li>
+          <li><b>Description:</b> <%= current_user.description %></li>
+          <li><b>Email:</b> <%= current_user.email %></li>
+        </ul>
+        <h4>Edit your account:</h4>
+          <%= link_to 'Edit Personal infos', edit_user_path, class:'btn btn-primary'%>    
+          <%= link_to 'Edit Password & Email', edit_user_registration_path, class:'btn btn-danger'%>    
+      </div>
   </div>
 
-  <section>
-    <h2>Your personnal infos:</h2>
+  <h2>Events you're administrating:</h2>
     
-    <p>Profile picture</p>
-    <%= current_user_avatar %>
+    <!-- /.row -->
+  <div class="row">
+    <% current_user.administrated_events.each do |event| %>
 
-    <ul class="user-infos">
-      <li>Username: <%= current_user.username %></li>
-      <li>First name: <%= current_user.first_name %></li>
-      <li>Last name: <%= current_user.last_name %></li>
-      <li>Description: <%= current_user.description %></li>
-      <li>Email: <%= current_user.email %></li>
-    </ul>
-  </section>
+    <div class="col-lg-3 col-md-4 col-sm-6 portfolio-item">
+      <div class="card h-100">
+        <%= link_to event_path(event.id) do %>
+          <%= display_event_images(event, "card-img-top").first%>
+        <% end %>
+        <div class="card-body">
+          <h4 class="card-title">
+            <%= link_to event.title, event_path(event.id) %>
+          </h4>
+        </div>
+      </div>
+    </div>
 
-  <section>
-    <h2>Administraed events:</h2>
-    <ul class="list-group">
-      <% current_user.administrated_events.each do |event| %>
-        <li>
-          <%= link_to event_path(event), class: "list-group-item list-group-item-action" do %> 
-            Title:  <%= event.title %> Starting: <%= event.starting_date %>
-          <% end %>
-        </li>
-      <% end %>
-    </ul>
-  </section>
-
-  <section>
-    <h2>Edit your account:</h2>
-      <%= link_to 'Edit Personal infos', edit_user_path, class:'btn btn-primary'%>    
-      <%= link_to 'Edit Password & Email', edit_user_registration_path, class:'btn btn-danger'%>    
-  </section>
+    <% end %>
+  </div>
+    <!-- /.row -->
 </div>
+    <!-- /.container -->

@@ -119,12 +119,12 @@
         <h5 class="card-header">Event Details</h5>
         <div class="card-body">
           <ul>
-            <li>N° of participants: <%= @event.participants.count %></li>
-            <li>Administrator: <%= @event.administrator.username %></li>
-            <li>Starting: <%= @event.starting_date_time %></li>
-            <li>Ending: <%= @event.ending_date_date_time %></li>
-            <li>Location: <%= @event.location %></li>
-            <li>Price: <%= pretty_amount(@amount) %></li>
+            <li><b>N° of participants</b>: <%= @event.participants.count %></li>
+            <li><b>Administrator</b>: <%= @event.administrator.username %></li>
+            <li><b>Starting</b>: <%= @event.starting_date_time %></li>
+            <li><b>Ending</b>: <%= @event.ending_date_date_time %></li>
+            <li><b>Location</b>: <%= @event.location %></li>
+            <li><b>Price</b>: <%= pretty_amount(@amount) %></li>
           </ul>
         </div>
       </div>
