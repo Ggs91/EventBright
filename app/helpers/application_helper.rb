@@ -1,4 +1,5 @@
 module ApplicationHelper
+  include Pagy::Frontend
   def bootstrap_class_for_flash(type)
     case type
       when 'info' then 'alert-info'
