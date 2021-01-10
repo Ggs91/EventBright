@@ -15,22 +15,26 @@
 
 <%# Main %>
 
-<main class="album bg-light py-5">
-  <div class="container">
-      <div class="row">
-      <% @events.each do |event|%>
-        <div class="col-md-4">
-          <div class="card mb-4 box-shadow">
-            <div class="card-body">
-              <h5 class="card-title"><%= event.title %></h5>
-              <h6 class="card-subtitle mb-2 text-muted"><%= event.created_at.strftime("%Y-%m-%d at %H:%M") %></h6>
-              <p class="card-text"><%= event.description %></p>
-              <p class="card-text">Administrator: <%= event.administrator.username%></p>
-               <%= link_to 'See event', event_path(event.id), class: 'card-link' %>
-            </div>
-          </div>
+<div class="container">
+  <h1 class="my-4">Latest Events</h1>
+
+  <div class="row">
+  <% @events.each do |event|%>
+    <div class="col-lg-4 col-sm-6 portfolio-item">
+      <div class="card h-100">
+        <%= link_to event_path(event.id) do %>
+          <%= display_event_images(event).first%>
+        <% end %>
+        <div class="card-body">
+          <h4 class="card-title">
+            <%=link_to event.title, event_path(event.id) %>
+          </h4>
+          <p class="card-subtitle mb-2 text-muted"><%= event.created_at.strftime("%Y-%m-%d at %H:%M") %></p>
+          <p class="card-text"><%= event.description %></p>
         </div>
-      <% end %>
       </div>
+    </div>
+  <% end %>
   </div>
-</main>
+  
+</div>

@@ -1,4 +1,4 @@
-<% if event.administrator == current_user %>
+<% if current_user_is_administrator?(event) %>
   <%= link_to "Event Dashboard", participations_path(event_id: event.id), class: 'btn btn-success' %><br />
 <% elsif current_user_already_participant?(event) %>
   <%= link_to "Cancel participation", participation_path(current_user_participation(event).id, event_id: event.id), method: :delete, class:'btn btn-danger' %><br />
