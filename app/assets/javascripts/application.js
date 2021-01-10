@@ -12,19 +12,7 @@
 //
 //= require rails-ujs
 //= require activestorage
-//= require_tree .
-
-$(document).ready(function () {
-
- flatpickr("#datepicker", {
-   minDate: Date.now(),
- });
-
- flatpickr("#timepicker", {
-  noCalendar: true,
-  enableTime: true,
-  dateFormat: "h:i K",
- });
- 
-});
+//= require jquery.min
+//= require bootstrap.bundle.min
+//= require main
 
