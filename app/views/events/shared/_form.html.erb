@@ -34,7 +34,7 @@
 
   <div class="form-group">
     <%= f.label 'price' %>
-    <%= f.number_field :price, in: 1...1000, class: "form-control" %>
+    <%= f.number_field :price, in: 0...1000, class: "form-control" %>
   </div>
 
   <% resource.event_images.each do |img| %>
