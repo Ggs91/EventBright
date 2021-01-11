@@ -65,10 +65,10 @@ private
     current_user_is_administrator?(@event)
   end
 
-	def parsed_datetime
+  def parsed_datetime
     date = params.require(:event).permit(:starting_date)[:starting_date]
     time = params.require(:event).permit(:starting_time)[:starting_time]
-	  DateTime.parse("#{date} #{time}")
+	  DateTime.parse("#{date} #{time}") if date.present? && time.present?
 	end    
 
   def parsed_duration
