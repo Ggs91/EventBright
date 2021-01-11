@@ -1,4 +1,3 @@
-<%= render partial: 'components/error_messages', locals: {resource: resource} %>
   <%= yield %>
 <%= form_for resource, :html => { novalidate: true, class: "needs-validation" } do |f| %>
 
@@ -28,13 +27,13 @@
   </div>
 
   <div class="form-group">
-    <%= f.label 'durations' %>
+    <%= f.label 'duration' %>
     <%= f.time_select :duration, minute_step: 5, include_seconds: false, ignore_date: true, prompt: { hour: 'Choose hour', minute: 'Choose minute' }, class: "form-control" %>
   </div>
 
   <div class="form-group">
     <%= f.label 'price' %>
-    <%= f.number_field :price, in: 1...1000, class: "form-control" %>
+    <%= f.number_field :price, in: 0...1000, class: "form-control" %>
   </div>
 
   <% resource.event_images.each do |img| %>
