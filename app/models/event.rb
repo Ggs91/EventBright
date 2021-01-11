@@ -7,6 +7,7 @@ class Event < ApplicationRecord
   belongs_to :administrator, class_name: "User"
   has_many :participations, dependent: :destroy
   has_many :participants, through: :participations, source: :user, dependent: :destroy
+  has_many :comments, as: :commentable, dependent: :destroy
   # Validations
   validate :start_date_cannot_be_in_the_past
   validate :duration_must_be_positif_multiple_of_5
@@ -24,8 +25,8 @@ class Event < ApplicationRecord
   validates :title, presence: { message: "You must choose a title" }, length: { in: 5..140 }
   validates :description, presence: { message: "You must add a description" }, length: { in: 5..1000 }
   validates :location, presence: { message: "You must choose a location" }
-  validates :starting_date, presence: { message: "You must choose a starting date" }
-  validates :starting_time, presence: { message: "You must choose a starting time" }
+  # validates :starting_date, presence: { message: "You must choose a starting date" }
+  # validates :starting_time, presence: { message: "You must choose a starting time" }
 
   def start_date_cannot_be_in_the_past
     errors.add(:start_date, "time and date must be present or can't be in the past") unless start_date.present? && DateTime.parse("#{start_date}") >= DateTime.now.change(offset: "+0000")

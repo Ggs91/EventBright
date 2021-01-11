@@ -26,6 +26,14 @@ module ApplicationHelper
     end 
   end
 
+  def user_avatar(user, image_class= "", size=200)
+    if user.avatar.attached?
+      image_tag user.avatar, alt: 'avatar', class: image_class, size: size
+    else
+      image_tag 'default-avatar.png', alt: 'default-avatar', class: image_class, size: size
+    end 
+  end
+
   # Event images 
   def display_event_images(event, image_class= "")
     if event.images.attached?

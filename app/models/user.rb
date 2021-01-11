@@ -28,6 +28,9 @@ class User < ApplicationRecord
     UserMailer.welcome_email(self).deliver_now
   end
 
+  # Associations
+  has_many :comments, foreign_key: :commenter_id, dependent: :destroy
+
   # Extends devise authentication keys: email OR usernam are possible as authentication keys.
   # Extends Devise to query via warden. This uses some SQL to query for either 
   # the username or email fields given one or the other is supplied during form submission. 
