@@ -6,8 +6,13 @@ Rails.application.routes.draw do
   end
   resources :events do 
     resources :images, only: [:create, :destroy]
+    resources :comments, except: [:index, :show, :new]
   end
   resources :participations, only: [:index, :new, :create, :destroy]
+
+  # resources :comments do
+  #   resources :comments
+  # end
   get 'about', to: 'static_pages#about'
   get 'contact', to: 'static_pages#contact'
   get 'thanks', to: 'participations#thanks', as: 'thanks'
