@@ -1,8 +1,10 @@
 Participation.destroy_all
+Comment.destroy_all
 Event.destroy_all
 User.destroy_all
 
 Participation.destroy_all
+Comment.reset_pk_sequence
 Event.reset_pk_sequence
 User.reset_pk_sequence
 
@@ -34,4 +36,24 @@ puts "#{User.all.count} users created"
   e.participants.concat(User.all.sample(4))
 end
 puts "#{Event.all.count} events created"
+
+#Create comments on Events
+40.times do
+  Comment.create!(
+    content: Faker::Lorem.sentence(word_count: 3, supplemental: true, random_words_to_add: 4),
+    commenter: User.all.sample,
+    commentable: Event.all.sample,
+  )
+end
+
+#Create comments on Comments
+20.times do
+  Comment.create!(
+    content: Faker::Lorem.sentence(word_count: 3, supplemental: true, random_words_to_add: 4),
+    commenter: User.all.sample,
+    commentable: Comment.all.sample,
+  )
+end
+puts "#{Comment.count} comments created"
+
 puts "End of seeds"
