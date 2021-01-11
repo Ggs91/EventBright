@@ -21,17 +21,21 @@ class Event < ApplicationRecord
     only_integer: true,
     message: 'Price must be between 0 and 1000' 
   validates :duration, numericality: { only_integer: true }
-  validates :title, presence: true, length: { in: 5..140 }
-  validates :description, presence: true, length: { in: 5..1000 }
-  validates :location, presence: true
+  validates :title, presence: { message: "You must choose a title" }, length: { in: 5..140 }
+  validates :description, presence: { message: "You must add a description" }, length: { in: 5..1000 }
+  validates :location, presence: { message: "You must choose a location" }
+  validates :starting_date, presence: { message: "You must choose a starting date" }
+  validates :starting_time, presence: { message: "You must choose a starting time" }
 
   def start_date_cannot_be_in_the_past
     errors.add(:start_date, "time and date must be present or can't be in the past") unless start_date.present? && DateTime.parse("#{start_date}") >= DateTime.now.change(offset: "+0000")
   end
 
   def duration_must_be_positif_multiple_of_5
-    errors.add(:duration, "must be a multiple of 5") unless duration.present? && duration > 0 && duration % 5 == 0
+    errors.add(:duration, "must be a multiple of 5 and at least 5 minutes") unless duration.present? && duration > 0 && duration % 5 == 0
   end
+
+  # instance methods
 
   def starting_date_time
     self.start_date.strftime("%Y-%m-%d at %H:%M")
