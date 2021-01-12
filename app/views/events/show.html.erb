@@ -58,43 +58,18 @@
 
       <hr>
 
-          <!-- Comments Form -->
       <div class="card my-4">
         <h5 class="card-header">Leave a Comment:</h5>
         <div class="card-body">
-
-          <%= form_for Comment.new, url: event_comments_path(@event.id), :html => { novalidate: true, class: "needs-validation" } do |f| %>
-            <div class="form-group">
-              <%= f.text_area :content, class: "form-control", row: "3" %>
-            </div>
-            <%= submit_tag "Submit", class:"btn btn-primary" %>
-          <% end %>
-
+          <!-- Comments Form -->
+          <%= render partial: "comments/form", locals: { commentable: @event } %>
         </div>
       </div>
     
-        <!-- Comment with nested comments -->
-      <% @event.comments.order("created_at DESC").each_with_index do |comment, i| %>  
-        <div class="media mb-4">
-          <%= user_avatar(comment.commenter, "d-flex mr-3 rounded-circle", 50) %>
-          <div class="media-body">
-            <h5 class="mt-0"> <%= comment.commenter.username %></h5>
+      <!-- Comment with nested comments -->
+      <%= render partial: "comments/comments", locals: { commentable: @event } %>
 
-            <%= comment.content %><br>
 
-            <% comment.comments.each do |nested_comment| %>
-              <div class="media mt-4">
-                <%= user_avatar(comment.commenter, "d-flex mr-3 rounded-circle", 50) %>
-                <div class="media-body">
-                  <h5 class="mt-0"><%= nested_comment.commenter.username %></h5>
-                  <%= nested_comment.content %>
-                </div>
-              </div>
-            <% end %>
-
-          </div>
-        </div>
-      <% end %>
     </div>
     <!-- /.col-lg-8-->
 
