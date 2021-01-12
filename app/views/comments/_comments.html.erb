@@ -1,0 +1,32 @@
+<% commentable.comments.each_with_index do |comment, i| %>  
+  <div class="media mb-4">
+    <%= user_avatar(comment.commenter, "d-flex mr-3 rounded-circle", 50) %>
+    <div class="media-body">
+      <h5 class="mt-0"> <%= comment.commenter.username %></h5>
+
+      <%= comment.content %> <br>
+
+      <a id="<%= i %>" class= "btn text-primary reply-btn">Reply</a>
+
+      <!-- Reply Form  -->
+
+      <div class="card-body" id="reply-form-<%= i %>" style='display:none;'>
+        <%= render partial: "comments/form", locals: { commentable: comment } %>
+        <a id="<%= i %>" class="btn btn-danger cancel-btn">Cancel</a>
+      </div>
+
+      <!-- Nested Comment -->
+
+      <% comment.comments.each do |nested_comment| %>
+        <div class="media mt-4">
+          <%= user_avatar(comment.commenter, "d-flex mr-3 rounded-circle", 50) %>
+          <div class="media-body">
+            <h5 class="mt-0"><%= nested_comment.commenter.username %></h5>
+            <%= nested_comment.content %>
+          </div>
+        </div>
+      <% end %>
+
+    </div>
+  </div>
+<% end %>
