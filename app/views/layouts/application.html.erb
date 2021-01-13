@@ -5,16 +5,16 @@
     <title>EventB</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-    <%= javascript_include_tag 'application' %>
     <%= stylesheet_link_tag 'application', media: 'all' %>
                  <%# Datepicker %>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <link rel="stylesheet" type="text/css" href="https://npmcdn.com/flatpickr/dist/themes/material_blue.css">
   </head>
   <body>
-     <%= render "components/header" %>
-     <%= render "components/alert" %>
+    <%= render "components/header" %>
+    <%= render "components/alert" %>
     <%= yield %>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <%= javascript_include_tag 'application' %>
   </body>
 </html>
