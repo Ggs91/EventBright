@@ -1,13 +1,5 @@
 Rails.application.routes.draw do
-  namespace :admin do
-      resources :users
-      resources :comments
-      resources :events
-      resources :participations
 
-      root to: "users#index"
-    end
-    
   root 'events#index'
   devise_for :users
 
@@ -25,6 +17,15 @@ Rails.application.routes.draw do
   end
 
   resources :participations, only: [:index, :new, :create, :destroy]
+
+  namespace :admin do
+    resources :users
+    resources :comments
+    resources :events
+    resources :participations
+
+    root to: "users#index"
+  end
 
   get 'about', to: 'static_pages#about'
   get 'contact', to: 'static_pages#contact'
