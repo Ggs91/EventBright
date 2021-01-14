@@ -58,6 +58,9 @@ GEM
       momentjs-rails (~> 2.8)
       sassc-rails (~> 2.1)
       selectize-rails (~> 0.6)
+    administrate-field-active_storage (0.1.8)
+      administrate (>= 0.2.0.rc1)
+      rails (>= 5.2)
     archive-zip (0.12.0)
       io-like (~> 0.3.0)
     arel (9.0.0)
@@ -278,6 +281,7 @@ DEPENDENCIES
   active_storage_validations
   activerecord-reset-pk-sequence
   administrate
+  administrate-field-active_storage (~> 0.1.8)
   better_errors
   binding_of_caller
   bootsnap (>= 1.1.0)
