@@ -38,7 +38,7 @@ class UserDashboard < Administrate::BaseDashboard
     username: Field::String,
     password: Field::Password,
     password_confirmation: Field::Password,
-
+    admin: Field::Boolean,
   }.freeze
 
   # COLLECTION_ATTRIBUTES
@@ -49,36 +49,19 @@ class UserDashboard < Administrate::BaseDashboard
   COLLECTION_ATTRIBUTES = %i[
   id
   username
-  participations
   attended_events
   administrated_events
+  admin
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES
   # an array of attributes that will be displayed on the model's show page.
   SHOW_PAGE_ATTRIBUTES = %i[
-  participations
   attended_events
   administrated_events
   comments
   id
   email
-  encrypted_password
-  reset_password_token
-  reset_password_sent_at
-  remember_created_at
-  sign_in_count
-  current_sign_in_at
-  last_sign_in_at
-  current_sign_in_ip
-  last_sign_in_ip
-  confirmation_token
-  confirmed_at
-  confirmation_sent_at
-  unconfirmed_email
-  failed_attempts
-  unlock_token
-  locked_at
   created_at
   updated_at
   description
@@ -93,7 +76,6 @@ class UserDashboard < Administrate::BaseDashboard
   FORM_ATTRIBUTES = %i[
   password
   password_confirmation
-  participations
   attended_events
   administrated_events
   comments
@@ -114,12 +96,14 @@ class UserDashboard < Administrate::BaseDashboard
   #   COLLECTION_FILTERS = {
   #     open: ->(resources) { resources.where(open: true) }
   #   }.freeze
-  COLLECTION_FILTERS = {}.freeze
+  COLLECTION_FILTERS = {
+    admin: ->(resources) { resources.where(admin: true) }
+  }.freeze
 
   # Overwrite this method to customize how users are displayed
   # across all pages of the admin dashboard.
   #
-  # def display_resource(user)
-  #   "User ##{user.id}"
-  # end
+  def display_resource(user)
+    user.admin? ? "Admin ##{user.id}": "User ##{user.id}"
+  end
 end
