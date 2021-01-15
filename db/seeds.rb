@@ -20,6 +20,18 @@ User.reset_pk_sequence
     description: Faker::Lorem.paragraph(2, false, 4),
 	)
 end
+
+# Admin seed
+
+User.create!(
+  username: "admin#{rand(1..1000)}",
+  first_name: first_name,
+  last_name: last_name,
+  email: "admin@email.com",
+  password: "password",
+  description: Faker::Lorem.paragraph(2, false, 4),
+)
+  
 puts "#{User.all.count} users created"
 
 ### Event seed ###
