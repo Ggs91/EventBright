@@ -8,8 +8,6 @@ class UserDashboard < Administrate::BaseDashboard
   # which determines how the attribute is displayed
   # on pages throughout the dashboard.
   ATTRIBUTE_TYPES = {
-    avatar_attachment: Field::HasOne,
-    avatar_blob: Field::HasOne,
     participations: Field::HasMany,
     attended_events: Field::HasMany.with_options(class_name: "Event"),
     administrated_events: Field::HasMany.with_options(class_name: "Event"),
@@ -38,6 +36,9 @@ class UserDashboard < Administrate::BaseDashboard
     first_name: Field::String,
     last_name: Field::String,
     username: Field::String,
+    password: Field::Password,
+    password_confirmation: Field::Password,
+
   }.freeze
 
   # COLLECTION_ATTRIBUTES
@@ -46,17 +47,16 @@ class UserDashboard < Administrate::BaseDashboard
   # By default, it's limited to four items to reduce clutter on index pages.
   # Feel free to add, remove, or rearrange items.
   COLLECTION_ATTRIBUTES = %i[
-  avatar_attachment
-  avatar_blob
+  id
+  username
   participations
   attended_events
+  administrated_events
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES
   # an array of attributes that will be displayed on the model's show page.
   SHOW_PAGE_ATTRIBUTES = %i[
-  avatar_attachment
-  avatar_blob
   participations
   attended_events
   administrated_events
@@ -91,29 +91,13 @@ class UserDashboard < Administrate::BaseDashboard
   # an array of attributes that will be displayed
   # on the model's form (`new` and `edit`) pages.
   FORM_ATTRIBUTES = %i[
-  avatar_attachment
-  avatar_blob
+  password
+  password_confirmation
   participations
   attended_events
   administrated_events
   comments
   email
-  encrypted_password
-  reset_password_token
-  reset_password_sent_at
-  remember_created_at
-  sign_in_count
-  current_sign_in_at
-  last_sign_in_at
-  current_sign_in_ip
-  last_sign_in_ip
-  confirmation_token
-  confirmed_at
-  confirmation_sent_at
-  unconfirmed_email
-  failed_attempts
-  unlock_token
-  locked_at
   description
   first_name
   last_name
