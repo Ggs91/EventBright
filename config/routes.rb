@@ -19,12 +19,11 @@ Rails.application.routes.draw do
   resources :participations, only: [:index, :new, :create, :destroy]
 
   namespace :admin do
-    resources :users
-    resources :comments
-    resources :events
-    resources :participations
-
     root to: "users#index"
+    resources :users
+    resources :events
+    resources :comments
+    resources :participations, except: [:index]
   end
 
   get 'about', to: 'static_pages#about'
