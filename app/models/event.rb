@@ -2,8 +2,8 @@ class Event < ApplicationRecord
   # virtual attributes to retrieve date and time in 2 different fields
   attr_accessor :starting_date, :starting_time
   
-  has_many_attached :images
   # Associations
+  has_many_attached :images
   belongs_to :administrator, class_name: "User"
   has_many :participations, dependent: :destroy
   has_many :participants, through: :participations, source: :user, dependent: :destroy
@@ -27,6 +27,9 @@ class Event < ApplicationRecord
   validates :location, presence: { message: "You must choose a location" }
   # validates :starting_date, presence: { message: "You must choose a starting date" }
   # validates :starting_time, presence: { message: "You must choose a starting time" }
+
+  # Scopes
+  scope :validated, -> {where(validated: true)}
 
   def start_date_cannot_be_in_the_past
     errors.add(:start_date, "time and date must be present or can't be in the past") unless start_date.present? && DateTime.parse("#{start_date}") >= DateTime.now.change(offset: "+0000")
