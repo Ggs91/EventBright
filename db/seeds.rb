@@ -12,7 +12,7 @@ User.reset_pk_sequence
 	first_name = Faker::Name.first_name
 	last_name = Faker::Name.last_name
 	user = User.create!(
-		username: "username#{rand(1..1000)}",
+		username: "username#{rand(1..10000)}",
 		first_name: first_name,
 		last_name: last_name,
 		email: first_name + last_name + "@yopmail.com",
@@ -23,6 +23,8 @@ end
 
 # Admin seed
 
+first_name = Faker::Name.first_name
+last_name = Faker::Name.last_name
 User.create!(
   username: "admin#{rand(1..1000)}",
   first_name: first_name,
@@ -32,7 +34,7 @@ User.create!(
   description: Faker::Lorem.paragraph(2, false, 4),
 )
   
-puts "#{User.all.count} users created"
+puts "#{User.all.count} users (20 user + 1 admin) created"
 
 ### Event seed ###
 10.times do |i|
@@ -43,7 +45,7 @@ puts "#{User.all.count} users created"
     start_date: Faker::Date.forward(days: 30),
     duration: rand(4..60)*5,
     administrator: User.all.sample,
-    price: rand(50..1000)
+    price: rand(50..1000),
   )
   e.participants.concat(User.all.sample(4))
 end
