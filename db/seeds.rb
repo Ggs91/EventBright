@@ -32,12 +32,13 @@ User.create!(
   email: "admin@email.com",
   password: "password",
   description: Faker::Lorem.paragraph(2, false, 4),
+  admin: true,
 )
   
 puts "#{User.all.count} users (20 user + 1 admin) created"
 
 ### Event seed ###
-10.times do |i|
+15.times do |i|
   e = Event.create!(
     title: "Event #{i+1}",
     description: Faker::Lorem.paragraph_by_chars(number: 256, supplemental: false),
