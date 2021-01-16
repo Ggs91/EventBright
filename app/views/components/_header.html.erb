@@ -27,6 +27,9 @@
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
               <%= link_to 'Profile', user_path(current_user.id), class: 'dropdown-item' %>
               <%= link_to 'Logout', destroy_user_session_path, method: :delete, class: 'dropdown-item' %>
+              <% if current_user.try(:admin?) %>
+                <%= link_to 'Admin dashboard', admin_root_path, class: 'dropdown-item' %>
+              <% end %>
             </div>
           </li>
         <% else %>

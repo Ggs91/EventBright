@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+
   root 'events#index'
   devise_for :users
 
@@ -16,6 +17,19 @@ Rails.application.routes.draw do
   end
 
   resources :participations, only: [:index, :new, :create, :destroy]
+
+  namespace :admin do
+    root to: "users#index"
+    resources :users
+    resources :events do 
+      put "unvalidate", on: :member
+    end
+    resources :comments
+    resources :participations, except: [:index]
+    resources :event_submissions, except: [:new] do 
+      put "validate", on: :member
+    end
+  end
 
   get 'about', to: 'static_pages#about'
   get 'contact', to: 'static_pages#contact'
