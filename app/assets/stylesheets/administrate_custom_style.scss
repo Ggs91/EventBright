@@ -1,0 +1,10 @@
+.center {
+  text-align: center; 
+}
+
+.btn-important-action {
+  background: #d32f2f !important; 
+    &:hover {
+    background: #a51c1c !important;
+  }
+}
