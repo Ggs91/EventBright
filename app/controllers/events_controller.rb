@@ -21,7 +21,7 @@ class EventsController < ApplicationController
     @event = Event.new(event_params.merge(administrator: current_user, start_date: parsed_datetime, duration: parsed_duration, price: formated_price))
     
     if @event.save 
-      flash[:success] = "Your event has been created !"
+      flash[:success] = "Your event has been created it will be reviewed & validated soon!"
       redirect_to @event
     else
       flash.now[:warning] = "Your event has not been created"
