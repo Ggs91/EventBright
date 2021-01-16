@@ -4,6 +4,7 @@ class EventsController < ApplicationController
   before_action :set_event, only: [:show, :edit, :update, :destroy]
   before_action :ensure_current_user_is_administrator, only: [:edit, :update, :destroy]
   before_action :amount_to_be_charged, only: [:show]
+  before_action :ensure_event_is_validated, only: [:show]
   
   def index
     @pagy, @events = pagy(Event.all.with_attached_images.validated.order("created_at DESC"), items: 9)
@@ -21,8 +22,8 @@ class EventsController < ApplicationController
     @event = Event.new(event_params.merge(administrator: current_user, start_date: parsed_datetime, duration: parsed_duration, price: formated_price))
     
     if @event.save 
-      flash[:success] = "Your event has been created !"
-      redirect_to @event
+      flash[:success] = "Your event has been created it will be reviewed & validated soon!"
+      redirect_to submission_success_path 
     else
       flash.now[:warning] = "Your event has not been created"
       render :new
@@ -47,6 +48,9 @@ class EventsController < ApplicationController
     @event.destroy
     flash[:success] = "Event successfully deleted"
     redirect_to root_path
+  end
+
+  def submission_success
   end
 
 private
@@ -85,5 +89,12 @@ private
   def amount_to_be_charged
     # Amount in cents
     @amount = @event.price
+  end
+
+  def ensure_event_is_validated
+    unless @event.validated 
+      flash[:warning] = "This event is being reviewed for validation"
+      redirect_to root_path
+    end
   end
 end
