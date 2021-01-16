@@ -47,6 +47,7 @@ puts "#{User.all.count} users (20 user + 1 admin) created"
     duration: rand(4..60)*5,
     administrator: User.all.sample,
     price: rand(50..1000),
+    validated: true,
   )
   e.participants.concat(User.all.sample(4))
 end
