@@ -19,7 +19,7 @@ Rails.application.routes.draw do
   resources :participations, only: [:index, :new, :create, :destroy]
 
   namespace :admin do
-    root to: "users#index"
+    root to: "events#index"
     resources :users
     resources :events do 
       put "unvalidate", on: :member
