@@ -1,26 +1,31 @@
 class EventsController < ApplicationController
   include EventsHelper
   before_action :authenticate_user!, except: [:index, :show]
-  before_action :set_event, only: [:show, :edit, :update, :destroy]
-  before_action :ensure_current_user_is_administrator, only: [:edit, :update, :destroy]
+  load_and_authorize_resource except: [:submission_success]
+  authorize_resource only: [:submission_success] # require ability to be set as ":submissions_success, Event" https://github.com/CanCanCommunity/cancancan/wiki/authorizing-controller-actions#authorize_resource
   before_action :amount_to_be_charged, only: [:show]
-  before_action :ensure_event_is_validated, only: [:show]
+ 
+  # Cancancan take care of:
+  # before_action :set_event, only: [:show, :edit, :update, :destroy]
+  # before_action :ensure_current_user_is_administrator, only: [:edit, :update, :destroy]
+  # before_action :ensure_event_is_validated, only: [:show]
   
   def index
-    @pagy, @events = pagy(Event.all.with_attached_images.validated.order("created_at DESC"), items: 9)
+    # Without cancancan, with a scope defined in event.rb model
+    # @pagy, @events = pagy(Event.validated.with_attached_images.order("created_at DESC"), items: 9)
+ 
+    # With cancancan, it's done already through the ability scope. The scoped events are loaded in @events
+    @pagy, @events = pagy(@events.with_attached_images.order("created_at DESC"), items: 9)
   end
   
   def show
-    @event
   end
 
   def new
-    @event = Event.new
   end
 
   def create
-    @event = Event.new(event_params.merge(administrator: current_user, start_date: parsed_datetime, duration: parsed_duration, price: formated_price))
-    
+    @event.assign_attributes(event_params.merge(start_date: parsed_datetime, duration: parsed_duration, price: formated_price))
     if @event.save 
       flash[:success] = "Your event has been created it will be reviewed & validated soon!"
       redirect_to submission_success_path 
@@ -31,7 +36,6 @@ class EventsController < ApplicationController
   end
 
   def edit
-    @event
   end
 
   def update
@@ -55,30 +59,20 @@ class EventsController < ApplicationController
 
 private
 
-  # Use callbacks to share common setup or constraints between actions.
-  def set_event
-    @event = Event.find(params[:id])
-  end
-
-  # Never trust parameters from the scary internet, only allow the white list through.
   def event_params
     params.require(:event).permit(:title, :description, :location, :price, images: [])
   end  
 
-  def ensure_current_user_is_administrator
-    current_user_is_administrator?(@event)
-  end
-
   def parsed_datetime
     date = params.require(:event).permit(:starting_date)[:starting_date]
     time = params.require(:event).permit(:starting_time)[:starting_time]
-	  DateTime.parse("#{date} #{time}") if date.present? && time.present?
-	end    
+    DateTime.parse("#{date} #{time}") if date.present? && time.present?
+  end    
 
   def parsed_duration
-		hours = params.require(:event).permit("duration(4i)")["duration(4i)"]
+    hours = params.require(:event).permit("duration(4i)")["duration(4i)"]
     minutes = params.require(:event).permit("duration(5i)")["duration(5i)"]
-	  minutes.to_i + hours.to_i * 60 
+    minutes.to_i + hours.to_i * 60 
   end    
 
   def formated_price
@@ -91,10 +85,26 @@ private
     @amount = @event.price
   end
 
-  def ensure_event_is_validated
-    unless @event.validated 
-      flash[:warning] = "This event is being reviewed for validation"
-      redirect_to root_path
-    end
-  end
+# CanCanCan take car of:
+
+# -Thanks to it's loading feature:
+
+# def set_event
+#   @event = Event.find(params[:id])
+# end
+
+# -Thanks to scoping to "administrator_id: user.id"
+
+# def ensure_current_user_is_administrator
+#   current_user_is_administrator?(@event)
+# end
+
+# -Thanks to scoping to "validated: true"
+
+# def ensure_event_is_validated
+#   unless @event.validated 
+#     flash[:warning] = "This event is being reviewed for validation"
+#     redirect_to root_path
+#   end
+# end
 end
