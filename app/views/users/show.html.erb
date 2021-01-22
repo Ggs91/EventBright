@@ -19,11 +19,11 @@
       <div class="col-lg-8">
         <h2>Your personal infos:</h2>
         <ul>
-          <li><b>Username:</b> <%= current_user.username %></li>
-          <li><b>First name:</b> <%= current_user.first_name %></li>
-          <li><b>Last name:</b> <%= current_user.last_name %></li>
-          <li><b>Description:</b> <%= current_user.description %></li>
-          <li><b>Email:</b> <%= current_user.email %></li>
+          <li><b>Username:</b> <%= @user.username %></li>
+          <li><b>First name:</b> <%= @user.first_name %></li>
+          <li><b>Last name:</b> <%= @user.last_name %></li>
+          <li><b>Description:</b> <%= @user.description %></li>
+          <li><b>Email:</b> <%= @user.email %></li>
         </ul>
         <h4>Edit your account:</h4>
           <%= link_to 'Edit Personal infos', edit_user_path, class:'btn btn-primary'%>    
@@ -35,7 +35,7 @@
     
     <!-- /.row -->
   <div class="row">
-    <% current_user.administrated_events.each do |event| %>
+    <% @administrated_events.each do |event| %>
 
     <div class="col-lg-3 col-md-4 col-sm-6 portfolio-item">
       <div class="card h-100">
@@ -46,6 +46,7 @@
           <h4 class="card-title">
             <%= link_to event.title, event_path(event.id) %>
           </h4>
+          <%= render partial: 'events/shared/event_status', locals: { event: event } %>
         </div>
       </div>
     </div>
@@ -53,5 +54,6 @@
     <% end %>
   </div>
     <!-- /.row -->
+    <%== pagy_bootstrap_nav(@pagy) %>
 </div>
     <!-- /.container -->
