@@ -22,6 +22,7 @@ class EventDashboard < Administrate::BaseDashboard
     location: Field::String,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
+    validated: Field::Boolean,
   }.freeze
 
   # COLLECTION_ATTRIBUTES
@@ -34,11 +35,12 @@ class EventDashboard < Administrate::BaseDashboard
   administrator
   participants
   comments
-  ].freeze
+  validated
+].freeze
 
-  # SHOW_PAGE_ATTRIBUTES
-  # an array of attributes that will be displayed on the model's show page.
-  SHOW_PAGE_ATTRIBUTES = %i[
+# SHOW_PAGE_ATTRIBUTES
+# an array of attributes that will be displayed on the model's show page.
+SHOW_PAGE_ATTRIBUTES = %i[
   administrator
   participants
   comments
