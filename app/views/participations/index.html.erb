@@ -1,12 +1,13 @@
+
 <div class="container">
   <h2>Participants registered for this event</h2>
   <div class="list-group">
-      <% @event.participants.each do |participant| %>
+      <% @participations.each do |participation| %>
         <div class="list-group-item flex-column align-items-start">
           <div class="d-flex w-100 justify-content-between">
-            <h5 class="mb-1"><%= participant.username%></h5>
-            <h5 class="mb-1"><%= participant.email %></h5>
-            <small><%= time_ago_in_words(participation_where(participant, @event).created_at) %></small>
+            <h5 class="mb-1"><%= participation.user.username%></h5>
+            <h5 class="mb-1"><%= participation.user.email %></h5>
+            <small><%= time_ago_in_words(participation.created_at) %></small>
           </div>
         </div>
       <% end %>
