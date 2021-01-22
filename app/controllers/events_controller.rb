@@ -1,8 +1,7 @@
 class EventsController < ApplicationController
   include EventsHelper
   before_action :authenticate_user!, except: [:index, :show]
-  load_and_authorize_resource except: [:submission_success]
-  authorize_resource only: [:submission_success] # require ability to be set as ":submissions_success, Event" https://github.com/CanCanCommunity/cancancan/wiki/authorizing-controller-actions#authorize_resource
+  load_and_authorize_resource #load @event even for non restful action like :submission_success https://github.com/CanCanCommunity/cancancan/blob/develop/docs/Authorizing-controller-actions.md#choosing-actions
   before_action :amount_to_be_charged, only: [:show]
  
   # Cancancan take care of:
@@ -25,10 +24,10 @@ class EventsController < ApplicationController
   end
 
   def create
-    @event.assign_attributes(event_params.merge(start_date: parsed_datetime, duration: parsed_duration, price: formated_price))
+    @event.assign_attributes(administrator: current_user, start_date: parsed_datetime, duration: parsed_duration, price: formated_price)
     if @event.save 
       flash[:success] = "Your event has been created it will be reviewed & validated soon!"
-      redirect_to submission_success_path 
+      redirect_to submission_success_path(id: @event.id)
     else
       flash.now[:warning] = "Your event has not been created"
       render :new
