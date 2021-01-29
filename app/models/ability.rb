@@ -8,7 +8,7 @@ class Ability
     alias_action :create, :read, :update, :destroy, :to => :crud
     
     # Permissions for all users
-    can :read, Event, validated: true
+    can [:read, :home], Event, validated: true
     
     # Additional permissions for login users
     return unless user.present? 
