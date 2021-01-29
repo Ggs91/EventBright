@@ -1,4 +1,6 @@
 .alert {
-  position: relative;
+  z-index: 50;
+  position: absolute;
+  width: 100%;
   top: 65px;
 }
