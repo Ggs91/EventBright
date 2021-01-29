@@ -2,13 +2,13 @@
 @import 'base/config';
 @import 'layout/grid';
 @import 'layout/header';
-
-
-/* Image cover h-100 cards  */
-
-
-div.card.h-100 img {
-  width: 100%;
-  height: 200px;
-  object-fit: cover;
-}
+@import 'layout/footer';
+@import 'utilities/classes';
+@import 'components/button';
+@import 'components/alert';
+@import 'components/banner';
+@import 'components/pagination';
+@import 'pages/home';
+@import 'components/carousel';
+@import 'components/card';
+@import 'components/form';
