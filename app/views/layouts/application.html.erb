@@ -11,9 +11,10 @@
     <%= stylesheet_link_tag 'application', media: 'all' %>
   </head>
   <body>
-    <%= render "components/header" %>
-    <%= render "components/alert" %>
+    <%= render "header" %>
+    <%= render "alert" %>
     <%= yield %>
+    <%= render "footer" %>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <%= javascript_include_tag 'application' %>
   </body>

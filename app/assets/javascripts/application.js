@@ -14,6 +14,5 @@
 //= require activestorage
 //= require jquery.min
 //= require bootstrap.bundle.min
-//= require commentReply
 //= require main
 
