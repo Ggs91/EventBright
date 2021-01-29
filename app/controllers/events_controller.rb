@@ -14,7 +14,7 @@ class EventsController < ApplicationController
     # @pagy, @events = pagy(Event.validated.with_attached_images.order("created_at DESC"), items: 9)
  
     # With cancancan, it's done already through the ability scope. The scoped events are loaded in @events
-    @pagy, @events = pagy(@events.with_attached_images.order("created_at DESC"), items: 9)
+    @pagy, @events = pagy(@events.with_attached_images.order("created_at DESC"), items: 12)
   end
   
   def show

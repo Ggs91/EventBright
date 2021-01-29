@@ -1,3 +1,4 @@
+<div class="clear-absolute"></div>
 <div class="container">
 
   <!-- Page Heading/Breadcrumbs -->
@@ -32,28 +33,9 @@
   </div>
 
   <h2>Events you're administrating:</h2>
-    
-    <!-- /.row -->
-  <div class="row">
-    <% @administrated_events.each do |event| %>
-
-    <div class="col-lg-3 col-md-4 col-sm-6 portfolio-item">
-      <div class="card h-100">
-        <%= link_to event_path(event.id) do %>
-          <%= display_event_images(event, "card-img-top").first%>
-        <% end %>
-        <div class="card-body">
-          <h4 class="card-title">
-            <%= link_to event.title, event_path(event.id) %>
-          </h4>
-          <%= render partial: 'events/shared/event_status', locals: { event: event } %>
-        </div>
-      </div>
-    </div>
-
-    <% end %>
-  </div>
-    <!-- /.row -->
+  <%= render partial: "events/event_card_list", locals: { events: @administrated_events, display_status: true } %>
+ 
+  <div class="text-center">
     <%== pagy_bootstrap_nav(@pagy) %>
+  </div>
 </div>
-    <!-- /.container -->

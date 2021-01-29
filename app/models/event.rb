@@ -29,7 +29,8 @@ class Event < ApplicationRecord
   # validates :starting_time, presence: { message: "You must choose a starting time" }
 
   # Scopes
-  scope :validated, -> {where(validated: true)}
+  scope :validated, -> { where(validated: true) }
+  scope :latest,-> (nb) { order(created_at: :desc).limit(nb) }
 
   def start_date_cannot_be_in_the_past
     errors.add(:start_date, "time and date must be present or can't be in the past") unless start_date.present? && DateTime.parse("#{start_date}") >= DateTime.now.change(offset: "+0000")
