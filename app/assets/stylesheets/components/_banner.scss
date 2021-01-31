@@ -1,6 +1,8 @@
 .banner {
-  height: 300px;
+  height: 200px;
   position: relative;
+  margin-bottom: 50px;
+
 }
 
 .banner .flex-container {
@@ -25,19 +27,19 @@
   z-index: -1;
 }
 
-.banner h1 {
+.banner h3 {
   font-size: 3rem;
   font-weight: 700;
 }
 
 @media screen and (max-width: 992px) {
-  .banner h1 {
+  .banner h3 {
     font-size: 2.5rem;
   }
 }
 
 @media screen and (max-width: 576px) {
-  .banner h1 {
+  .banner h3 {
     font-size: 2rem;
   }
 }
