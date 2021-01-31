@@ -24,14 +24,15 @@
   margin-bottom: 0;
 }
 
-.card-presentation .starting-date {
+.card-presentation .starting-date,
+.card-presentation h4.card-title {
   color: var(--primary);
   font-weight: 500;
   font-size: 1rem;
 }
 
 .card-presentation .card-title a {
-  color: #444;
+  color: #000;
   text-decoration: none;
   display: -webkit-box;
   -webkit-line-clamp: 3;
@@ -45,13 +46,21 @@
   text-decoration: none;
 }
 
+.card-presentation .card-text {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 /* Only difference that applies between regular and horizontal cards */
 /* We only change the .card-regular or .card-horizontal class applied with media queries*/
 
 .card-horizontal {
   flex-direction: row;
   align-items: center;
-  height: 150px;
+  height: 160px;
 }
 
 .card-regular .card-img-link {
@@ -62,8 +71,8 @@
 
 .card-horizontal .card-img-link {
   height: 100%;
-  width: 150px;
-  min-width: 150px;
+  width: 160px;
+  min-width: 160px;
 }
 
 @media (max-width: 575px) { 
@@ -79,9 +88,10 @@
     padding: .75rem;
   }
 
-  .card-horizontal h5.card-title a {
+  .card-horizontal p.card-title a {
     line-height: 1.1rem;
     font-size: .9rem;
+    -webkit-line-clamp: 2;
   }
 
   .card-horizontal > .card-img-link {
@@ -91,6 +101,20 @@
 
   .card-horizontal .starting-date {
     font-size: .9rem;
+  }
+  
+  .card-presentation .card-text {
+    margin-bottom: 0;
+    font-size: .7rem;
+  } 
+  
+  a.card-link {
+    font-size: .7rem;
+  }
+  
+  h4.card-title {
+    font-size: .9rem;
+    margin-bottom: .4rem;
   }
 }
 
@@ -117,7 +141,8 @@
     min-width: 80px;
   }
 
-  .card-horizontal .starting-date {
+  .card-horizontal .starting-date,
+  .card-presentation h4.card-title {
     font-size: .7rem;
     margin-bottom: .2rem !important;
   }
