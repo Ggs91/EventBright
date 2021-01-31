@@ -1,9 +1,9 @@
 <div class="form-wrapper">
   <%= form_for(resource, as: resource_name, url: session_path(resource_name), class: "form-signin" )do |f| %>
-  <%= image_tag "icon/e.png", class: "mb-4", width: "72", height: "72" %>
+  <%= image_tag "icons/e.png", class: "mb-4", width: "72", height: "72" %>
     <h1 class="h3 mb-3 font-weight-normal">Sign in</h1>
     <%= f.label :login, class: "sr-only" %>
-    <%= f.text_field :login, autofocus: true, placeholder: "Enter email or Username", class:'form-control' %>
+    <%= f.text_field :login, autofocus: true, placeholder: "Email or Username", class:'form-control' %>
     <%= f.label :password, class: "sr-only" %>
     <%= f.password_field :password, autocomplete: "current-password", placeholder: "Password", class:'form-control' %> 
     <% if devise_mapping.rememberable? %>
