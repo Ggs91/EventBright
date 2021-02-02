@@ -41,7 +41,7 @@ puts "#{User.all.count} users (20 user + 1 admin) created"
 15.times do |i|
   e = Event.create!(
     title: "Event #{i+1}",
-    description: Faker::Lorem.paragraph(sentence_count: 300, supplemental: true),
+    description: Faker::Lorem.paragraph(sentence_count: 120, supplemental: true),
     location: Faker::TvShows::Friends.location,
     start_date: Faker::Date.forward(days: 30),
     duration: rand(4..60)*5,
