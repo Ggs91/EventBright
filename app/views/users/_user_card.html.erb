@@ -1,0 +1,8 @@
+<li class="user-card-list-item media">
+    <%= user_avatar(user, "mr-4 ml-1 rounded-circle align-self-center", 80)%>
+  <div class="media-body">
+   <span class="text-muted"><%= time_ago_in_words(participation.created_at) %></span>
+    <p><%= user.username %></p>
+    <p><%= user.email %></p>
+  </div>
+</li>

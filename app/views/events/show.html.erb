@@ -1,82 +1,12 @@
+<div class="clear-absolute"></div>
+
 <div class="container">
-
-  <h1 class="mt-4 mb-3"><%= @event.title %>
-    <small>by
-      <%= @event.administrator.username %>
-    </small>
-  </h1>
-
-  <!-- Page Heading/Breadcrumbs -->
-
-  <ol class="breadcrumb">
-    <li class="breadcrumb-item">
-      <%= link_to 'Home', root_path %>
-    </li>
-    <li class="breadcrumb-item active"><%= @event.title %></li>
-  </ol>
-
-  <div class="row">
-    <!-- Event Content Column -->
-
-    <div class="col-lg-8">
-
-      <%= render partial: "events/carousel", locals: { event: @event } %>
-
-      <hr>
-              <!-- Date/Time -->
-      <p>Posted on <%= @event.creation_date_and_time %></p>
-      <hr>
-              <!-- Event description -->
-      <p class="lead"><%= @event.description %></p>
-
-      <hr>
-
-      <div class="card my-4">
-        <h5 class="card-header">Leave a Comment:</h5>
-        <div class="card-body">
-          <!-- Comments Form -->
-          <%= render partial: "comments/form", locals: { commentable: @event } %>
-        </div>
-      </div>
-    
-      <!-- Comment with nested comments -->
-      <%= render partial: "comments/comments", locals: { commentable: @event } %>
-
-    </div>
-    <!-- /.col-lg-8-->
-
-      <!-- Sidebar Widgets Column -->
-
-    <div class="col-md-4">
-
-      <!-- Administration / Event regitration Widget -->
-
-      <div class="card my-4">
-        <h5 class="card-header"><%= current_user_is_administrator?(@event) ? 'Administration' : 'Take Part !' %></h5>
-        <div class="card-body">
-          <%= render partial: 'events/participation_link', locals: {event: @event} %>
-        </div>
-      </div>
-
-      <!-- Event Detail Widget -->
-
-      <div class="card my-4">
-        <h5 class="card-header">Event Details</h5>
-        <div class="card-body">
-          <ul>
-            <li><b>N° of participants</b>: <%= @event.participants.count %></li>
-            <li><b>Administrator</b>: <%= @event.administrator.username %></li>
-            <li><b>Starting</b>: <%= @event.starting_date_time %></li>
-            <li><b>Ending</b>: <%= @event.ending_date_date_time %></li>
-            <li><b>Location</b>: <%= @event.location %></li>
-            <li><b>Price</b>: <%= pretty_amount(@amount) %></li>
-          </ul>
-        </div>
-      </div>
-
-    </div>
-    <!-- /.cold-md-4-->
-  </div>
-    <!-- /.row -->
+  <%= render partial: "event_listing", locals: { event: @event, amount: @amount } %>
+  <%= render partial: "comments/comment_section", locals: { commentable: @event } %>
 </div>
-  <!-- /.container -->
+
+<div class="event-page-bg">
+  <div class="img-wrapper">
+    <%= render partial: "background_img_blur", locals: { event: @event } %>
+  </div>
+</div>

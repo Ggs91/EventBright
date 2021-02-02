@@ -3,7 +3,7 @@
     <% display_event_images(event, "card-img").first%>
   <% end %>
   <div class="card-body">
-    <% if display_status %>
+    <% if local_assigns[:display_status] %>
       <%= render partial: 'events/event_status', locals: { event: event } %>
     <% end %>
     <p class="starting-date mb-2"><%= event.starting_date_time %></p>
