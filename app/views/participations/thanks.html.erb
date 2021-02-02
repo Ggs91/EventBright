@@ -1,5 +1,7 @@
+<%= render partial: "shared/banner", locals: { title: "Thank You !" } %>
+
 <div class="container">
-  <h1 class="text-center">Thank you !</h1>
+  <h3 class="text-center">Successful Payment</h3>
   <% unless @event.is_free? %>
     <p>You paiment of <%= pretty_amount(@amount) %> has been accepted !</p>
   <% end %>
