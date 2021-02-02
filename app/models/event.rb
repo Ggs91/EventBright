@@ -23,7 +23,7 @@ class Event < ApplicationRecord
     message: 'Price must be between 0 and 1000' 
   validates :duration, numericality: { only_integer: true }
   validates :title, presence: { message: "You must choose a title" }, length: { in: 5..140 }
-  validates :description, presence: { message: "You must add a description" }, length: { in: 5..1000 }
+  validates :description, presence: { message: "You must add a description" }, length: { in: 5..10_000 }
   validates :location, presence: { message: "You must choose a location" }
   # validates :starting_date, presence: { message: "You must choose a starting date" }
   # validates :starting_time, presence: { message: "You must choose a starting time" }
