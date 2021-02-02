@@ -17,7 +17,7 @@ User.reset_pk_sequence
 		last_name: last_name,
 		email: first_name + last_name + "@yopmail.com",
 		password: "azerty",
-    description: Faker::Lorem.paragraph(2, false, 4),
+    description: Faker::Lorem.paragraph(5, false, 4),
 	)
 end
 
@@ -41,7 +41,7 @@ puts "#{User.all.count} users (20 user + 1 admin) created"
 15.times do |i|
   e = Event.create!(
     title: "Event #{i+1}",
-    description: Faker::Lorem.paragraph_by_chars(number: 256, supplemental: false),
+    description: Faker::Lorem.paragraph(sentence_count: 300, supplemental: true),
     location: Faker::TvShows::Friends.location,
     start_date: Faker::Date.forward(days: 30),
     duration: rand(4..60)*5,
@@ -50,6 +50,9 @@ puts "#{User.all.count} users (20 user + 1 admin) created"
     validated: true,
   )
   e.participants.concat(User.all.sample(4))
+  e.images.attach(io: File.open(Rails.root.join('app/assets/images/sport.jpg')), filename: 'sport.jpg', content_type: 'image/jpg')
+  e.images.attach(io: File.open(Rails.root.join('app/assets/images/cooking.jpeg')), filename: 'cooking.jpeg', content_type: 'image/jpeg')
+  e.images.attach(io: File.open(Rails.root.join('app/assets/images/conference.jpg')), filename: 'conference.jpg', content_type: 'image/jpg')
 end
 puts "#{Event.all.count} events created"
 
