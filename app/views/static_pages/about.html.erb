@@ -1,9 +1,13 @@
 <%= render partial: "shared/banner", locals: { title: "About" } %>
 
 <div class="container">
-  <%= render layout: "static_pages/presentation_panel" do %>
+  <div class="text-center">
     <h2>Georges ATALLA</h2>
-    <h3>Ruby on Rails developer</h3>
+  </div>
+  <%= render layout: "static_pages/presentation_panel" do %>
+    <div class="text-center">
+      <h3>Ruby on Rails developer</h3>
+    </div>
     <p>Hi there! I'm a Ruby on Rails developer, I also love JavaScript, HTML & CSS !</p>
     <p>This is actually one of my project, a full CRUD RoR Eventbrite clone !</p>
     <p>Checkout my porfolio that I've created from scratch: <%= link_to 'georgesatalla.com', 'https://www.georgesatalla.com/', target:"_blank" %></p>
@@ -11,7 +15,7 @@
 
   <!-- Projects -->
   <div class="text-center">
-    <h2>Some of my other projects</h2>
+    <h2>My other projects</h2>
   </div>
   
     <div class="row">

@@ -1,10 +1,10 @@
 <% commentable.comments.each_with_index do |comment, i| %>  
   <div class="media mb-4">
-    <%= user_avatar(comment.commenter, "d-flex mr-3 rounded-circle", 50) %>
+    <%= user_avatar(comment.commenter, "d-flex mr-2 rounded-circle", 50) %>
     <div class="media-body">
-      <h5 class="mt-0"> <%= comment.commenter.username %></h5>
-
-      <%= comment.content %> <br>
+      <h5 class="mt-0 commenter-username d-inline-block"> <%= comment.commenter.username %></h5>
+      <span class="text-muted ml-2"><%= time_ago_in_words(comment.created_at) %></span>
+      <p><%= comment.content %></p>
 
       <a id="<%= i %>" class= "btn text-primary reply-btn">Reply</a>
 
@@ -19,10 +19,11 @@
 
       <% comment.comments.each do |nested_comment| %>
         <div class="media mt-4">
-          <%= user_avatar(comment.commenter, "d-flex mr-3 rounded-circle", 50) %>
+          <%= user_avatar(comment.commenter, "d-flex mr-2 rounded-circle", 50) %>
           <div class="media-body">
-            <h5 class="mt-0"><%= nested_comment.commenter.username %></h5>
-            <%= nested_comment.content %>
+            <h5 class="mt-0 commenter-username d-inline-block"><%= nested_comment.commenter.username %></h5>
+            <span class="text-muted ml-2"><%= time_ago_in_words(nested_comment.created_at) %></span>
+            <p><%= nested_comment.content %></p>
           </div>
         </div>
       <% end %>

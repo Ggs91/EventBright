@@ -20,9 +20,9 @@ module ApplicationHelper
   # Avatar helper
   def current_user_avatar
     if current_user.avatar.attached?
-      image_tag current_user.avatar, alt: 'avatar', size: 200, style: "display: block"
+      image_tag current_user.avatar, alt: 'avatar', size: 200, style: "display: inline-block"
     else
-      image_tag 'default-avatar.png', alt: 'default-avatar', size: 200, style: "display: block"
+      image_tag 'default-avatar.png', alt: 'default-avatar', size: 200, style: "display: inline-block"
     end 
   end
 
