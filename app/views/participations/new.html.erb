@@ -1,17 +1,22 @@
+<div class="clear-absolute"></div>
 <div class="container">
-  <%= render partial: 'components/error_messages', locals: {resource: @participation} %>
+  <%= render partial: 'shared/error_messages', locals: {resource: @participation} %>
 
-  <h2 class="text-center">Register for this Event !</h2>
-
+  <div class="text-center">
+    <h2 class="text-center">Register for this Event !</h2>
+  </div>
+    <%= render partial: 'events/card_presentation_panel', locals: { event: @event, amount: @amount } %>
   <% if @event.is_free? %>
-    <%= link_to 'Join Now', participations_path(event_id: @event.id), method: :post, class:'btn btn-primary' %>
+    <div class="text-center mt-3">
+      <%= link_to 'Join Now', participations_path(event_id: @event.id), method: :post, class:'btn btn-lg btn-primary' %>
+    </div>
   <% else %>
-    <%= form_tag participations_path, method: :post do %>
+    <%= form_tag participations_path, method: :post, class:"text-center" do %>
       <%= hidden_field_tag "event_id", @event.id %>
       <article>
-        <label class="amount">
-          <span><%= pretty_amount(@amount) %></span>
-        </label>
+        <%# <label class="amount"> %>
+          <%# <span><%= pretty_amount(@amount) %>
+        <%# </label> %>
       </article>
       <script src="https://checkout.stripe.com/checkout.js"
               class="stripe-button"
