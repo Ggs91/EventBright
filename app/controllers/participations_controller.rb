@@ -43,7 +43,6 @@ class ParticipationsController < ApplicationController
 
       Participation.create(user: current_user, event: @event)
 
-      flash[:success] = "Your are part of this event !"
       redirect_to thanks_path(event_id: @event.id)
 
       rescue Stripe::CardError => e
