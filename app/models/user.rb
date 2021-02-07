@@ -25,14 +25,9 @@ class User < ApplicationRecord
 
   # Callbacks
   after_create :welcome_send
-  after_commit :add_default_avatar, on: [:update]
-  
+
   def welcome_send
     UserMailer.welcome_email(self).deliver_now
-  end
-
-  def avatar_thumbnail
-    avatar.variant(resize: "150x150!").processed
   end
 
   # Extends devise authentication keys: email OR username are possible as authentication keys.
@@ -45,20 +40,5 @@ class User < ApplicationRecord
       ["lower(username) = :value OR lower(email) = :value",
       { value: login.strip.downcase }]).first
   end
-
-  private 
-
-  def add_default_avatar
-    unless avatar.attached? 
-      avatar.attach(
-        io: File.open(
-          Rails.root.join(
-            "app", "assets", "images", "default-avatar.png"
-          )
-        ), filename: "default-avatar.png",
-        content_type: "image/png"
-      )
-    end
-  end
-
+  
 end
