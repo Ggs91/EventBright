@@ -29,7 +29,7 @@ class User < ApplicationRecord
     UserMailer.welcome_email(self).deliver_now
   end
 
-  # Extends devise authentication keys: email OR usernam are possible as authentication keys.
+  # Extends devise authentication keys: email OR username are possible as authentication keys.
   # Extends Devise to query via warden. This uses some SQL to query for either 
   # the username or email fields given one or the other is supplied during form submission. 
   def self.find_for_database_authentication warden_condition
