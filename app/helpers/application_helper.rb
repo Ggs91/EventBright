@@ -17,22 +17,6 @@ module ApplicationHelper
     amount_in_cents == 0 ? 'Free' : number_to_currency(amount_in_cents.to_f / 100, locale: :fr)
   end
 
-  # Avatar helper
-  def current_user_avatar
-    if current_user.avatar.attached?
-      image_tag current_user.avatar, alt: 'avatar', size: 200, style: "display: inline-block"
-    else
-      image_tag 'default-avatar.png', alt: 'default-avatar', size: 200, style: "display: inline-block"
-    end 
-  end
-
-  def user_avatar(user, image_class= "", size=200)
-    if user.avatar.attached?
-      image_tag user.avatar, alt: 'avatar', class: image_class, size: size
-    else
-      image_tag 'default-avatar.png', alt: 'default-avatar', class: image_class, size: size
-    end 
-  end
 
   # Event images 
   def display_event_images(event, image_class= "")

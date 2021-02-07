@@ -3,7 +3,7 @@
 <div class="container">
   <div class="form-group">
 
-    <%= current_user_avatar %>
+    <%= render partial: "users/user_avatar", locals: { user: current_user, size: "200" } %>
 
     <%= form_tag user_avatar_path(current_user.id), multipart: true do %>
       <%= file_field_tag :avatar %><br>
