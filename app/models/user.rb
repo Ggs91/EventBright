@@ -7,6 +7,7 @@ class User < ApplicationRecord
   :confirmable, :lockable, :timeoutable, :trackable #, :omniauthable
   # Associations 
   has_one_attached :avatar, dependent: :destroy
+  has_many :comments, foreign_key: :commenter_id, dependent: :destroy
   has_many :participations, dependent: :destroy
   has_many :attended_events, through: :participations, source: :event, dependent: :destroy
   has_many :administrated_events, foreign_key: "administrator_id", class_name: "Event", dependent: :destroy
@@ -27,9 +28,6 @@ class User < ApplicationRecord
   def welcome_send
     UserMailer.welcome_email(self).deliver_now
   end
-
-  # Associations
-  has_many :comments, foreign_key: :commenter_id, dependent: :destroy
 
   # Extends devise authentication keys: email OR usernam are possible as authentication keys.
   # Extends Devise to query via warden. This uses some SQL to query for either 
