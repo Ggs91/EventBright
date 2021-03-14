@@ -2,7 +2,7 @@
 
 An EventBrite clone application built from scratch with RubyOnRails!
 
-Visit the app [>> https://eventbrite-prod-app.herokuapp.com/ <<](https://eventbrite-prod-app.herokuapp.com/)
+Visit the app here [>> https://eventbrite-prod-app.herokuapp.com/ <<](https://eventbrite-prod-app.herokuapp.com/)
 
 Staging app: [eventbrite-staging-app.herokuapp.com](https://eventbrite-staging-app.herokuapp.com)
 Production app: [eventbrite-prod-app.herokuapp.com/](https://eventbrite-prod-app.herokuapp.com/)
