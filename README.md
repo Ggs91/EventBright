@@ -13,6 +13,27 @@ Production app: [eventbrite-prod-app.herokuapp.com/](https://eventbrite-prod-app
 
 ## I - Installation
 
++ Clone this repo. Open a terminal and type in:
+```
+git clone https://github.com/Ggs91/EventBright.git
+```
++ Enter the repo
+```
+cd EventBright
+```
++ Download dependencies
+
+```
+bundle install
+```
+
++ Setup database:
+```
+rails db:create
+rails db:migrate
+rails db:seed
+```
+
 ## Author
 **Georges Atalla**
 
