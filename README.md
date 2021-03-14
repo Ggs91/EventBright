@@ -17,5 +17,7 @@ Production app: [eventbrite-prod-app.herokuapp.com/](https://eventbrite-prod-app
 **Georges Atalla**
 
 Email - georges_atalla@hotmail.fr
+
 Portfolio - [www.georgesatalla.com](https://www.georgesatalla.com/)
+
 Github - https://github.com/Ggs91/
