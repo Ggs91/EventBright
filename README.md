@@ -13,7 +13,7 @@ Production app: [eventbrite-prod-app.herokuapp.com/](https://eventbrite-prod-app
 
 ## I - Installation
 
-+ Clone this repo. Open a terminal and type in:
++ Clone the project, open a terminal and type in:
 ```
 git clone https://github.com/Ggs91/EventBright.git
 ```
