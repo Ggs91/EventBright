@@ -17,11 +17,11 @@ Production app: [eventbrite-prod-app.herokuapp.com/](https://eventbrite-prod-app
 ```
 git clone https://github.com/Ggs91/EventBright.git
 ```
-+ Enter the repository
++ Enter the repository:
 ```
 cd EventBright
 ```
-+ Download dependencies
++ Download dependencies:
 
 ```
 bundle install
