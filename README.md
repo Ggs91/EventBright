@@ -4,13 +4,19 @@ An EventBrite clone application built from scratch with RubyOnRails!
 
 Visit the app here [>> https://eventbrite-prod-app.herokuapp.com/ <<](https://eventbrite-prod-app.herokuapp.com/)
 
+Create an account or use this one: 
+
+You can also login as an Admin: 
+
 Staging app: [eventbrite-staging-app.herokuapp.com](https://eventbrite-staging-app.herokuapp.com)
 Production app: [eventbrite-prod-app.herokuapp.com/](https://eventbrite-prod-app.herokuapp.com/)
 
 ## Table of Contents  
 - [I - Installation](#i---installation)
-- [II - Installation](#ii---installation)
-
+- [II - Informations](#ii---informations)
+  * [1. Backend](#1-backend)
+    + [1.1 Basics](#11-basics)
+    + [1.2 Writing a test using Rspec](#12-writing-a-test-using-rspec)
 ## I - Installation
 
 + Clone the project: open a terminal and type in
@@ -33,6 +39,9 @@ rails db:create
 rails db:migrate
 rails db:seed
 ```
+## II - Informations
+
+###  1. Backend
 
 ## Author
 **Georges Atalla**
