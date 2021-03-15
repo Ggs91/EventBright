@@ -12,12 +12,16 @@ Staging app: [eventbrite-staging-app.herokuapp.com](https://eventbrite-staging-a
 Production app: [eventbrite-prod-app.herokuapp.com/](https://eventbrite-prod-app.herokuapp.com/)
 
 ## Table of Contents  
-- [I - Installation](#i---installation)
-- [II - Informations](#ii---informations)
+- [I - Informations](#i---informations)
+- [II - Installation](#ii---installation)
   * [1. Backend](#1-backend)
     + [1.1 Basics](#11-basics)
     + [1.2 Writing a test using Rspec](#12-writing-a-test-using-rspec)
-## I - Installation
+## I - Informations
+
+###  1. Backend
+
+## II - Installation
 
 + Clone the project: open a terminal and type in
 ```
@@ -39,9 +43,6 @@ rails db:create
 rails db:migrate
 rails db:seed
 ```
-## II - Informations
-
-###  1. Backend
 
 ## Author
 **Georges Atalla**
