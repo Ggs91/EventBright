@@ -13,10 +13,11 @@ Production app: [eventbrite-prod-app.herokuapp.com/](https://eventbrite-prod-app
 
 ## Table of Contents  
 - [I - Informations](#i---informations)
-- [II - Installation](#ii---installation)
   * [1. Backend](#1-backend)
     + [1.1 Basics](#11-basics)
     + [1.2 Writing a test using Rspec](#12-writing-a-test-using-rspec)
+- [II - Installation](#ii---installation)
+
 ## I - Informations
 
 ###  1. Backend
