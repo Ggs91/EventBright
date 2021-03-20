@@ -4,9 +4,13 @@ An EventBrite clone application built from scratch with RubyOnRails!
 
 Visit the app here [>> eventbright-prod-app.herokuapp.com <<](https://eventbright-prod-app.herokuapp.com/)
 
-You can create an account or use this one: 
++ Login as a user:
+username: user
+password: password 
 
-You can also login as an Admin: 
++ Login as an admin:
+username: admin
+password: password
 
 ## Table of Contents  
 - [I - Informations](#i---informations)
