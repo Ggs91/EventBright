@@ -2,7 +2,7 @@
 
 An EventBrite clone application built from scratch with RubyOnRails!
 
-Visit the app here [>> https://eventbright-prod-app.herokuapp.com/ <<](https://eventbright-prod-app.herokuapp.com/)
+Visit the app here [>> eventbright-prod-app.herokuapp.com <<](https://eventbright-prod-app.herokuapp.com/)
 
 Create an account or use this one: 
 
