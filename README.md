@@ -8,8 +8,8 @@ Create an account or use this one:
 
 You can also login as an Admin: 
 
-Staging app: [eventbrite-staging-app.herokuapp.com](https://eventbrite-staging-app.herokuapp.com)
-Production app: [eventbrite-prod-app.herokuapp.com/](https://eventbrite-prod-app.herokuapp.com/)
+Staging app: [eventbright-staging-app.herokuapp.com](https://eventbright-staging-app.herokuapp.com/)
+Production app: [eventbright-prod-app.herokuapp.com/](https://eventbright-prod-app.herokuapp.com/)
 
 ## Table of Contents  
 - [I - Informations](#i---informations)
