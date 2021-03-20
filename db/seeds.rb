@@ -3,10 +3,12 @@ Comment.destroy_all
 Event.destroy_all
 User.destroy_all
 
-Participation.destroy_all
+Participation.reset_pk_sequence
 Comment.reset_pk_sequence
 Event.reset_pk_sequence
 User.reset_pk_sequence
+ActiveStorage::Blob.reset_pk_sequence
+ActiveStorage::Attachment.reset_pk_sequence
 
 20.times do
 	first_name = Faker::Name.first_name
@@ -17,7 +19,7 @@ User.reset_pk_sequence
 		last_name: last_name,
 		email: first_name + last_name + "@yopmail.com",
 		password: "azerty",
-    description: Faker::Lorem.paragraph(5, false, 4),
+    description: Faker::Lorem.paragraph(sentence_count: 5, supplemental: false, random_sentences_to_add: 4),
 	)
 end
 
@@ -31,14 +33,34 @@ User.create!(
   last_name: last_name,
   email: "admin@email.com",
   password: "password",
-  description: Faker::Lorem.paragraph(2, false, 4),
+  description: Faker::Lorem.paragraph(sentence_count: 2, supplemental: false, random_sentences_to_add: 4),
   admin: true,
 )
-  
+
 puts "#{User.all.count} users (20 user + 1 admin) created"
 
-### Event seed ###
-15.times do |i|
+  # Ouvre et lit le fichier depuis l'url que je lui ai donné, mais ré-upload  dans /assets dans cloudinary
+  image_blobs = [
+    ActiveStorage::Blob.create_after_upload!(io: open("https://res.cloudinary.com/cloudfilestorage/image/upload/v1616230747/eventbrite/travel_group_ur803j.jpg"), filename: 'travel_group.jpg', content_type: 'image/jpg'),
+    ActiveStorage::Blob.create_after_upload!(io: open("https://res.cloudinary.com/cloudfilestorage/image/upload/v1614553355/eventbrite/party_wtsqnk.jpg"), filename: 'party.jpg', content_type: 'image/jpg'),
+    ActiveStorage::Blob.create_after_upload!(io: open("https://res.cloudinary.com/cloudfilestorage/image/upload/v1614553355/eventbrite/boxe_zub0uu.jpg"), filename: 'boxe.jpg', content_type: 'image/jpg'),
+    ActiveStorage::Blob.create_after_upload!(io: open("https://res.cloudinary.com/cloudfilestorage/image/upload/v1614553355/eventbrite/festival_eilxbu.jpg"), filename: 'festival.jpg', content_type: 'image/jpg'),
+    ActiveStorage::Blob.create_after_upload!(io: open("https://res.cloudinary.com/cloudfilestorage/image/upload/v1614553355/eventbrite/foot_azqhzi.jpg"), filename: 'foot.jpg', content_type: 'image/jpg'),
+    ActiveStorage::Blob.create_after_upload!(io: open("https://res.cloudinary.com/cloudfilestorage/image/upload/v1614553355/eventbrite/cupcake_mvgwix.jpg"), filename: 'cupcake.jpg', content_type: 'image/jpg'),
+    ActiveStorage::Blob.create_after_upload!(io: open("https://res.cloudinary.com/cloudfilestorage/image/upload/v1614553355/eventbrite/motogp_fbr0o5.jpg"), filename: 'motogp.jpg', content_type: 'image/jpg'),
+    ActiveStorage::Blob.create_after_upload!(io: open("https://res.cloudinary.com/cloudfilestorage/image/upload/v1616230746/eventbrite/street_art_uggbux.jpg"), filename: 'street_art.jpg', content_type: 'image/jpg'),
+    ActiveStorage::Blob.create_after_upload!(io: open("https://res.cloudinary.com/cloudfilestorage/image/upload/v1614553355/eventbrite/church_xcxbjt.jpg"), filename: 'church.jpg', content_type: 'image/jpg'),
+    ActiveStorage::Blob.create_after_upload!(io: open("https://res.cloudinary.com/cloudfilestorage/image/upload/v1616230746/eventbrite/reading_l8w6jy.jpg"), filename: 'reading.jpg', content_type: 'image/jpg'),
+    ActiveStorage::Blob.create_after_upload!(io: open("https://res.cloudinary.com/cloudfilestorage/image/upload/v1616230746/eventbrite/parots_rmfiis.jpg"), filename: 'parot.jpg', content_type: 'image/jpg'),
+    ActiveStorage::Blob.create_after_upload!(io: open("https://res.cloudinary.com/cloudfilestorage/image/upload/v1614549011/eventbrite/sport_wsvhxi.jpg"), filename: 'sport.jpg', content_type: 'image/jpg'),
+    ActiveStorage::Blob.create_after_upload!(io: open("https://res.cloudinary.com/cloudfilestorage/image/upload/v1616230746/eventbrite/hills_bufyyp.jpg"), filename: 'hills.jpg', content_type: 'image/jpg'),
+    ActiveStorage::Blob.create_after_upload!(io: open("https://res.cloudinary.com/cloudfilestorage/image/upload/v1614549008/eventbrite/cooking_naecrb.jpg"), filename: 'theatre.jpg', content_type: 'image/jpg'),
+    ActiveStorage::Blob.create_after_upload!(io: open("https://res.cloudinary.com/cloudfilestorage/image/upload/v1616230746/eventbrite/surf_k8pufl.jpg"), filename: 'surf.jpg', content_type: 'image/jpg'),
+    ActiveStorage::Blob.create_after_upload!(io: open("https://res.cloudinary.com/cloudfilestorage/image/upload/v1616230746/eventbrite/monkey_fw0qha.jpg"), filename: 'monkey.jpg', content_type: 'image/jpg'),
+    ActiveStorage::Blob.create_after_upload!(io: open("https://res.cloudinary.com/cloudfilestorage/image/upload/v1614549002/eventbrite/conference_y7qiyn.jpg"), filename: 'conference.jpg', content_type: 'image/jpg')
+  ]
+
+  30.times do |i|
   e = Event.create!(
     title: "Event #{i+1}",
     description: Faker::Lorem.paragraph(sentence_count: 120, supplemental: true),
@@ -50,16 +72,9 @@ puts "#{User.all.count} users (20 user + 1 admin) created"
     validated: true,
   )
   e.participants.concat(User.all.sample(4))
-  image_path_1 = Rails.root.join('app', 'assets', 'images', 'sport.jpg')
-  image_path_2 = Rails.root.join('app', 'assets', 'images', 'cooking.jpeg')
-  image_path_3 = Rails.root.join('app', 'assets', 'images', 'conference.jpg')
-  e.images.attach(io: File.open(image_path_1), filename: 'sport.jpg', content_type: 'image/jpg')
-  e.images.attach(io: File.open(image_path_2), filename: 'cooking.jpeg', content_type: 'image/jpeg')
-  e.images.attach(io: File.open(image_path_3), filename: 'conference.jpg', content_type: 'image/jpg')
-
-  # e.images.attach(io: File.open(Rails.root.join('app/assets/images/sport.jpg')), filename: 'sport.jpg', content_type: 'image/jpg')
-  # e.images.attach(io: File.open(Rails.root.join('app/assets/images/cooking.jpeg')), filename: 'cooking.jpeg', content_type: 'image/jpeg')
-  # e.images.attach(io: File.open(Rails.root.join('app/assets/images/conference.jpg')), filename: 'conference.jpg', content_type: 'image/jpg')
+  e.images.attach(image_blobs[0..10].sample)
+  e.images.attach(image_blobs[11..13].sample)
+  e.images.attach(image_blobs[14..16].sample)
 end
 puts "#{Event.all.count} events created"
 

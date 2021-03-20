@@ -12,18 +12,18 @@ module ApplicationHelper
     end
   end
 
-  # Format price 
+  # Format price
   def pretty_amount(amount_in_cents)
     amount_in_cents == 0 ? 'Free' : number_to_currency(amount_in_cents.to_f / 100, locale: :fr)
   end
 
 
-  # Event images 
+  # Event images
   def display_event_images(event, image_class= "")
     if event.images.attached?
       event.images.map { |img| image_tag img.blob, alt: 'default-event-image', class: image_class }
     else
-      [image_tag('default-event-image.png', alt: 'default-event-image', class: image_class )]
-    end 
+      [image_tag('default-event-image.png', alt: 'default-event-image', class: image_class)]
+    end
   end
 end
