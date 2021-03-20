@@ -1,6 +1,6 @@
 <div class="card card-presentation card-regular">
   <%= link_to event_path(event.id), class: "card-img-link" do %>
-    <% display_event_images(event, "card-img").first%>
+    <% display_event_images(event, "card-img").first %>
   <% end %>
   <div class="card-body">
     <% if local_assigns[:display_status] %>
