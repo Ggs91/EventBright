@@ -23,21 +23,30 @@ ActiveStorage::Attachment.reset_pk_sequence
 	)
 end
 
+# Demo user seed
+
+User.create!(
+  username: "user",
+  first_name: "user_first_name",
+  last_name: "user_last_name",
+  email: "user@email.com",
+  password: "password",
+  description: Faker::Lorem.paragraph(sentence_count: 2, supplemental: false, random_sentences_to_add: 4)
+)
+
 # Admin seed
 
-first_name = Faker::Name.first_name
-last_name = Faker::Name.last_name
 User.create!(
-  username: "admin#{rand(1..1000)}",
-  first_name: first_name,
-  last_name: last_name,
+  username: "admin",
+  first_name: "admin_first_name",
+  last_name: "admin_last_name",
   email: "admin@email.com",
   password: "password",
   description: Faker::Lorem.paragraph(sentence_count: 2, supplemental: false, random_sentences_to_add: 4),
   admin: true,
 )
 
-puts "#{User.all.count} users (20 user + 1 admin) created"
+puts "#{User.all.count} users created (20 user + 1 demo user + 1 admin)"
 
   # Ouvre et lit le fichier depuis l'url que je lui ai donné, mais ré-upload  dans /assets dans cloudinary
   image_blobs = [
