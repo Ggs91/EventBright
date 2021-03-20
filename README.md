@@ -1,4 +1,4 @@
-# EventBright ![](/app/assets/images/EventBright.png)
+![](/app/assets/images/EventBright.png)
 
 An EventBrite clone application built from scratch with RubyOnRails!
 
