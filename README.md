@@ -4,12 +4,9 @@ An EventBrite clone application built from scratch with RubyOnRails!
 
 Visit the app here [>> eventbright-prod-app.herokuapp.com <<](https://eventbright-prod-app.herokuapp.com/)
 
-Create an account or use this one: 
+You can create an account or use this one: 
 
 You can also login as an Admin: 
-
-Staging app: [eventbright-staging-app.herokuapp.com](https://eventbright-staging-app.herokuapp.com/)
-Production app: [eventbright-prod-app.herokuapp.com/](https://eventbright-prod-app.herokuapp.com/)
 
 ## Table of Contents  
 - [I - Informations](#i---informations)
