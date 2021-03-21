@@ -62,6 +62,8 @@ I twisted the configuration a little bit to allow users to use either email or u
 ``` 
 
 #### 1.2 Authorization (CanCanCan)
+Authorizations are centralized in . It enabled me to drastically DRY up the controllers by getting ride of many `before_action`. It also make it convinient to set a variable with re requiered authorizations as it's loaded by the gem.
+
 ## II - Installation
 
 1. Clone the project: open a terminal and type in
