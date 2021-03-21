@@ -13,8 +13,8 @@ Login as a user or admin (admin has access to admin dashboard from profile dropd
 ## Table of Contents  
 - [I - Informations](#i---informations)
   * [1. Backend](#1-backend)
-    + [1.1 Basics](#11-basics)
-    + [1.2 Writing a test using Rspec](#12-writing-a-test-using-rspec)
+    + [1.1 Authentication (Device)](#11-authentication)
+    + [1.2 authorization (CanCanCan](#12-writing-a-test-using-rspec)
 - [II - Installation](#ii---installation)
 
 ## I - Informations
