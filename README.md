@@ -14,13 +14,15 @@ Login as a user or admin (admin has access to admin dashboard from profile dropd
 - [I - Informations](#i---informations)
   * [1. Backend](#1-backend)
     + [1.1 Authentication (Device)](#11-authentication)
-    + [1.2 authorization (CanCanCan)](#12-writing-a-test-using-rspec)
+    + [1.2 Authorization (CanCanCan)](#12-authorization-(cancancan))
 - [II - Installation](#ii---installation)
 
 ## I - Informations
-#### 1.1 Authentication
-###  1. Backend
 
+###  1. Backend
+#### 1.1 Authentication
+
+#### 1.2 Authorization (CanCanCan)
 ## II - Installation
 
 + Clone the project: open a terminal and type in
