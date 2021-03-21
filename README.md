@@ -23,9 +23,8 @@ Login as a user or admin (admin has access to admin dashboard from profile dropd
 
 ###  1. Backend
 #### 1.1 Authentication (Device)
-Device is configured to enable authentication using either email or username
-
-To setup this configuration few steps were requiered: 
+Device is configured to allow users to use either email or username to sign in. Following the [Device wiki](https://github.com/heartcombo/devise/wiki/How-To:-Allow-users-to-sign-in-using-their-username-or-email-address) here's the few steps requiered: 
+- Change the default authentication key: 
 
 #### 1.2 Authorization (CanCanCan)
 ## II - Installation
