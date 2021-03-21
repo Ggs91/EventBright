@@ -20,7 +20,7 @@ Login as a user or admin (admin has access to admin dashboard from profile dropd
 ## I - Informations
 
 ###  1. Backend
-#### 1.1 Authentication
+#### 1.1 Authentication (Device)
 
 #### 1.2 Authorization (CanCanCan)
 ## II - Installation
