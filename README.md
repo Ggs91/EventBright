@@ -15,6 +15,8 @@ Login as a user or admin (admin has access to admin dashboard from profile dropd
   * [1. Backend](#1-backend)
     + [1.1 Authentication (Device)](#11-authentication-device)
     + [1.2 Authorization (CanCanCan)](#12-authorization-cancancan)
+  * [2. Frontend](#2-frontend)
+  * [3. Dependencies](#3-dependencies)
 - [II - Installation](#ii---installation)
 
 ## I - Informations
