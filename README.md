@@ -41,6 +41,25 @@ I twisted the configuration a little bit to allow users to use either email or u
       keys: [:first_name, :last_name, :description, :email])
   end
 ```
+- In the `User` model I've set a virtual attribute that will be used in the sign in form to hold the value of the crendential entered by the user (either email or username). I overwrote the `find_for_database_authentication` Device class method to extend the default query to search for both credentials in the DB.
+
+```ruby
+# app/models/user.rb
+
+  class User < ApplicationRecord
+   attr_accessor :login
+
+   ...
+
+   def self.find_for_database_authentication warden_condition
+     conditions = warden_condition.dup
+     login = conditions.delete(:login)
+     where(conditions).where(
+       ["lower(username) = :value OR lower(email) = :value",
+       { value: login.strip.downcase }]).first
+   end
+ end
+``` 
 
 #### 1.2 Authorization (CanCanCan)
 ## II - Installation
