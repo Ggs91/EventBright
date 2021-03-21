@@ -27,29 +27,31 @@ Login as a user or admin (admin has access to admin dashboard from profile dropd
 
 + Clone the project: open a terminal and type in
 ```
-git clone https://github.com/Ggs91/EventBright.git
+$ git clone https://github.com/Ggs91/EventBright.git
 ```
 + Enter the repository:
 ```
-cd EventBright
+$ cd EventBright
 ```
 + Download dependencies:
 
 ```
-bundle install
+$ bundle install
 ```
 
 + Setup database:
 ```
-rails db:create
-rails db:migrate
-rails db:seed
+$ rails db:create
+$ rails db:migrate
+$ rails db:seed
 ```
 
-+ Start the server (run on localhost:3000):
++ Start the server:
 ```
-rails s 
+$ rails s 
 ```
+
++ Go to `http://localhost:3000`
 
 ## Author
 **Georges Atalla**
