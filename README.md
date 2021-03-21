@@ -23,7 +23,8 @@ Login as a user or admin (admin has access to admin dashboard from profile dropd
 
 ###  1. Backend
 #### 1.1 Authentication (Device)
-Device is configured to enable authentification using either email or username
+Device is configured to enable authentication using either email or username
+
 To setup this configuration few steps were requiered: 
 
 #### 1.2 Authorization (CanCanCan)
