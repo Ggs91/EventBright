@@ -1,5 +1,6 @@
 ![](/app/assets/images/EventBright.png)
 
+
 An EventBrite clone application built from scratch with RubyOnRails!
 
 Visit the app here [eventbright-prod-app.herokuapp.com](https://eventbright-prod-app.herokuapp.com/)
@@ -13,8 +14,9 @@ Login as a user or admin (admin has access to admin dashboard from profile dropd
 ## Table of Contents  
 - [I - Informations](#i---informations)
   * [1. Backend](#1-backend)
-    + [1.1 Authentication (Device)](#11-authentication-device)
-    + [1.2 Authorization (CanCanCan)](#12-authorization-cancancan)
+    + [1.1 Models & database structure](#11-models-and-database-structure)
+    + [1.2 Authentication (Devise)](#12-authentication-devise)
+    + [1.3 Authorization (CanCanCan)](#13-authorization-cancancan)
   * [2. Frontend](#2-frontend)
   * [3. Dependencies](#3-dependencies)
 - [II - Installation](#ii---installation)
@@ -22,8 +24,30 @@ Login as a user or admin (admin has access to admin dashboard from profile dropd
 ## I - Informations
 
 ###  1. Backend
-#### 1.1 Authentication (Device)
-I twisted the Device configuration a little bit to allow users to use either email or username to sign in. Following the [Device wiki](https://github.com/heartcombo/devise/wiki/How-To:-Allow-users-to-sign-in-using-their-username-or-email-address) here's the few steps I've done: 
+#### 1.1 Models and database structure
+Currently there's 4 models: 
+ - `User`: set for both regluar users of the app and administrators (with an `:admin` attribute set to `true`)
+    - has one attached `avatar`
+    - has many `administrated_events` (`Event` type)
+    - has many `participations`
+    - has many `attended_events` (`Event` type) through `participation`
+ - `Event`: main subject resource
+    - has many attached `images`
+    - belongs to `administrator` (`User` type) 
+    - has many `participations` 
+    - has many `participants` (`User` type) through `participations`
+    - has many `comments` as `commentable`
+ - `Participation`: a user's participation to an event 
+    - belongs to `user`
+    - belongs to `event`
+ - `Comment`: on events or other users comments
+    - belongs to `commenter` (`User` type)
+    - belongs to `commentable` (polymorphic)
+    - has many `comments` as `commentable`
+
+
+#### 1.2 Authentication (Devise)
+I twisted the Devise configuration a little bit to allow users to use either email or username to sign in. Following the [Devise wiki](https://github.com/heartcombo/devise/wiki/How-To:-Allow-users-to-sign-in-using-their-username-or-email-address) here's the few steps I've done: 
 - Change the default authentication key to use `:login` instead of `:email`:
 ```ruby
 # config/initializers/devise.rb
@@ -41,7 +65,7 @@ I twisted the Device configuration a little bit to allow users to use either ema
       keys: [:first_name, :last_name, :description, :email])
   end
 ```
-- In the `User` model I've set a virtual attribute that will be used in the sign in form to hold the value of the crendential entered by the user (either email or username). I overwrote the `find_for_database_authentication` Device class method to extend the default query to search for both credentials in the DB.
+- In the `User` model I've set a virtual attribute that will be used in the sign in form to hold the value of the crendential entered by the user (either email or username). I overwrote the `find_for_database_authentication` Devise class method to extend the default query to search for both credentials in the DB.
 
 ```ruby
 # app/models/user.rb
@@ -61,8 +85,15 @@ I twisted the Device configuration a little bit to allow users to use either ema
  end
 ``` 
 
-#### 1.2 Authorization (CanCanCan)
-Authorizations are centralized in . It enabled me to drastically DRY up the controllers by getting ride of many `before_action`. It also make it convinient to set a variable with re requiered authorizations as it's loaded by the gem.
+#### 1.3 Authorization (CanCanCan)
+Permissions are centralized in `app/models/ability.rb`. It enabled me to drastically DRY up the controllers by getting ride of many `before_action`s, and conveniently load a resource with the right permissions.
+
+Here's some examples of permissions implemented: 
+
+- Unauthenticated users can only access `event`'s `index` & `show` pages, but can't join it.
+- Only `event`'s administrator can access the `event`'s profile (`show`) page if it's not validated by the (app) administrator yet. This is so an event's owner has still permission to updated or delete his event before it's published.
+-Only validated `event`'s are displayed on the `index` page.
+-Only `event`'s administrator can access `participant`s list.
 
 ## II - Installation
 
@@ -70,7 +101,7 @@ Authorizations are centralized in . It enabled me to drastically DRY up the cont
 ```
 $ git clone https://github.com/Ggs91/EventBright.git
 ```
-2. Enter the repository:
+2. Change directory to `EventBright`:
 ```
 $ cd EventBright
 ```
