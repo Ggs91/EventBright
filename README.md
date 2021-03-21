@@ -25,33 +25,33 @@ Login as a user or admin (admin has access to admin dashboard from profile dropd
 #### 1.2 Authorization (CanCanCan)
 ## II - Installation
 
-+ Clone the project: open a terminal and type in
+1. Clone the project: open a terminal and type in
 ```
 $ git clone https://github.com/Ggs91/EventBright.git
 ```
-+ Enter the repository:
+2. Enter the repository:
 ```
 $ cd EventBright
 ```
-+ Download dependencies:
+3. Download dependencies:
 
 ```
 $ bundle install
 ```
 
-+ Setup database:
+4. Setup database:
 ```
 $ rails db:create
 $ rails db:migrate
 $ rails db:seed
 ```
 
-+ Start the server:
+5. Start the server:
 ```
 $ rails s 
 ```
 
-+ Go to `http://localhost:3000`
+6. Go to `http://localhost:3000`
 
 ## Author
 **Georges Atalla**
