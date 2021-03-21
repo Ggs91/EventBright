@@ -13,8 +13,8 @@ Login as a user or admin (admin has access to admin dashboard from profile dropd
 ## Table of Contents  
 - [I - Informations](#i---informations)
   * [1. Backend](#1-backend)
-    + [1.1 Authentication (Device)](#11-authentication-(device))
-    + [1.2 Authorization (CanCanCan)](#12-authorization)
+    + [1.1 Authentication (Device)](#11-authentication-device)
+    + [1.2 Authorization (CanCanCan)](#12-authorization-cancancan)
 - [II - Installation](#ii---installation)
 
 ## I - Informations
