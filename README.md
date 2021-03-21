@@ -44,6 +44,11 @@ rails db:migrate
 rails db:seed
 ```
 
++ Start the server (run on localhost:3000):
+```
+rails s 
+```
+
 ## Author
 **Georges Atalla**
 
