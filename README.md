@@ -24,14 +24,14 @@ Login as a user or admin (admin has access to admin dashboard from profile dropd
 ###  1. Backend
 #### 1.1 Authentication (Device)
 I twisted the configuration a little bit to allow users to use either email or username to sign in. Following the [Device wiki](https://github.com/heartcombo/devise/wiki/How-To:-Allow-users-to-sign-in-using-their-username-or-email-address) here's the few steps I've done: 
-- Change the default authentication key to use `:login` instead of email:
-```
+- Change the default authentication key to use `:login` instead of `:email`:
+```ruby
 # config/initializers/devise.rb
 
   config.authentication_keys = [:login]
 ```
 - I made it mandatory to choose a username along with email & password during registration. So I had to permit it in strong parameters. Note: email also need to be explicitly permitted as well, it's no longer automatically permitted as it's not the default authentication key anymore.  
-```
+```ruby
 # app/controllers/application_controller.rb
 
   def configure_permitted_parameters
