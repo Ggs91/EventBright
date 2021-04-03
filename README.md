@@ -144,7 +144,7 @@ images = [
   end
 ``` 
 
-But I faced a 2 problems with the line `event.images.attach(images[rand[0..15]])`:
+But I faced a 2 problems with the line `event.images.attach(images[rand[0..15].first])`:
 
 - Each time the `#attach` method is used, it is actually re-uploading the image to Cloudinary before creating a blob for this image and attaching it to the event. This means if I wanted to seed 30 `event`s I would have 90 (30 * 3) uploads happening & unnecessary duplicated images stored on the cloud. 
 - This is too much API calls to the server and Cloudinary was blocking my requests
