@@ -173,9 +173,9 @@ end
 Since the `image_blobs` array contains 15 single instances of blobs, and I was picking randomly 3 blobs out of those same 15, it means a same blob can get attached twice for the same `event`. I was getting an `ActiveRecord::RecordNotUnique` error because there is a uniqueness constraint on the `active_storage_attachments` table. I found a simple way to work around this problem:
 
 ```ruby
-  event.images.attach(image_blobs[0..8].sample)
-  event.images.attach(image_blobs[9..11].sample)
-  event.images.attach(image_blobs[12..14].sample)
+event.images.attach(image_blobs[0..8].sample)
+event.images.attach(image_blobs[9..11].sample)
+event.images.attach(image_blobs[12..14].sample)
 ```
 Now I make sure each `event` doesn't get the same image twice, and this also have the advantage of forcing more diversity regarding the images displayed.
 
