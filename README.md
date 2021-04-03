@@ -113,7 +113,75 @@ Event can either be free or paying. To checkout for paying events, enter testing
 
 #### 1.4 Mailer (Action Mailer)
 
-Emails are sent after specific actions. When a user create an account (welcome email), or when a participation is created to summarize it with its `star_date`, `administrator` and number of `participants`. 
+Emails are sent after specific actions: 
+- welcome email: when a user create an account
+- summarizing email: when a participation is created to summarize the event infos, `star_date`, `administrator` and number of `participants`. 
+
+There are both text and html templates.
+
+#### 1.5 Image upload (Active Storage & Cloudinary)
+
+Cloudinary is used for hosting images and storing uploaded images. 
+I use Active Storage for uploading images directly from the client to the cloud service. 
+
+An interesting part was the work on the seed with this configuration. I had to find a way to minimize API calls to the server and make sure each `event` doesn't get the same image twice for both a better seed and because there is a uniqueness constraint on the `active_storage_attachments` table, so it is not possible to attach the same blob twice to an `event`.
+
+I had 15 images stored on Cloudinary that I wanted to use for seeding the `event` images (each `event` has 3 attached images). First I attached an image individually to each event like this:
+```ruby
+# seed.rb
+
+# Storing images paths in an array:
+
+  images = [
+    io: open("https://res.cloudinary.com/cloudfilestorage/image/upload/v1616230747/eventbrite/travel_group_ur803j.jpg"), filename: 'travel_group.jpg', content_type: 'image/jpg',
+    io: open("https://res.cloudinary.com/cloudfilestorage/image/upload/v1614553355/eventbrite/party_wtsqnk.jpg"), filename: 'party.jpg', content_type: 'image/jpg',
+    io: open("https://res.cloudinary.com/cloudfilestorage/image/upload/v1614549002/eventbrite/conference_y7qiyn.jpg"), filename: 'conference.jpg', content_type: 'image/jpg'
+    ...
+    # 15 images paths on the cloud
+  ]
+
+ # Attaching 3 images per event: 
+
+  3.times do 
+    event.images.attach(images[rand[0..15]])
+  end
+``` 
+
+But I faced a 2 problems with the line `event.images.attach(images[rand[0..15]])`:
+
+- Each time the `#attach` method is used, it is actually re-uploading the image to Cloudinary before creating a blob for this image and attaching it to the event. This means if I wanted to seed 30 `event`s I would have 90 (30 * 3) uploads happening & unnecessary duplicated images stored on the cloud. 
+- This is too much API calls to the server and Cloudinary was blocking my requests
+
+After some research I found a way to separate the processes (blob creation & blob attachement) that are automatically done by the `#attach` method:
+
+```ruby 
+# seed.rb
+
+  image_blobs = [
+    ActiveStorage::Blob.create_after_upload!(io: open("https://res.cloudinary.com/cloudfilestorage/image/upload/v1616230747/eventbrite/travel_group_ur803j.jpg"), filename: 'travel_group.jpg', content_type: 'image/jpg'),
+    ActiveStorage::Blob.create_after_upload!(io: open("https://res.cloudinary.com/cloudfilestorage/image/upload/v1614553355/eventbrite/party_wtsqnk.jpg"), filename: 'party.jpg', content_type: 'image/jpg'),
+    ActiveStorage::Blob.create_after_upload!(io: open("https://res.cloudinary.com/cloudfilestorage/image/upload/v1614553355/eventbrite/boxe_zub0uu.jpg"), filename: 'boxe.jpg', content_type: 'image/jpg'),
+
+... # 15 times
+
+```
+The `ActiveStorage::Blob.create_after_upload!` uploads the images to the cloud and create a blob referencing this image. Now I have an array that contain 15 blobs referencing 15 images, that are uploaded once and for all to the cloud. I can now have more control over the attachement process. 
+
+But I faced another problem with the file attachment: 
+
+```ruby
+  3.times do 
+    event.images.attach(image_blobs[rand[0..15]])
+  end
+```
+Since the `image_blobs` array contains 15 single instances of blobs, and I was picking randomly 3 blobs out of those same 15, it means a same blob can get attached twice for the same `event`. I was getting an `ActiveRecord::RecordNotUnique` error because there is a uniqueness constraint on the `active_storage_attachments` table. I found a simple way to work around this problem:
+
+```ruby
+  event.images.attach(image_blobs[0..8].sample)
+  event.images.attach(image_blobs[9..11].sample)
+  event.images.attach(image_blobs[12..14].sample)
+```
+Now I make sure each `event` doesn't get the same image twice, and this also have the advantage of forcing more diversity regarding the images displayed.
 
 ## II - Installation
 
