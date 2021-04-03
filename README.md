@@ -17,7 +17,7 @@ Login as a user or admin (admin has access to admin dashboard from profile dropd
     + [1.2 Authentication (Devise)](#12-authentication-devise)
     + [1.3 Authorization (CanCanCan)](#13-authorization-cancancan)
     + [1.4 Admin dashboard (Administrate)](#14-admin-dashboard-administrate)
-    + [1.5 Payment system (Stripe)](#15-payment-system)
+    + [1.5 Payment system (Stripe)](#15-payment-system-stripe)
     + [1.6 Mailer (Action Mailer)](#16-mailer-action-mailer)
     + [1.7 Image upload (Active Storage & Cloudinary)](#17-active-storang-and-cloudinary)
   * [2. Frontend](#2-frontend)
@@ -119,7 +119,7 @@ Emails are sent after specific actions:
 
 There are both text and html templates.
 
-#### 1.7 Image upload (Active Storage & Cloudinary)
+#### 1.7 Image upload (Active Storage and Cloudinary)
 
 Cloudinary is used for hosting images and storing uploaded images. 
 I use Active Storage for uploading images directly from the client to the cloud service. 
