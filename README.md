@@ -105,7 +105,7 @@ When an event is newly created, it has its `validated` attribute set to `false`.
 
 #### 1.4 Payment system ([Stripe](https://stripe.com/docs/development))
 
-Event can either be free or paying. To checkout for paying events type in testing card infos in the checkout form: 
+Event can either be free or paying. To checkout for paying events, enter testing card infos in the checkout form: 
 
 - Card n° `4242 4242 4242 4242`
 - Expiry date: any date in the future e.g. `12/25`
