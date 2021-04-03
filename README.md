@@ -19,7 +19,7 @@ Login as a user or admin (admin has access to admin dashboard from profile dropd
     + [1.4 Admin dashboard (Administrate)](#14-admin-dashboard-administrate)
     + [1.5 Payment system (Stripe)](#15-payment-system-stripe)
     + [1.6 Mailer (Action Mailer)](#16-mailer-action-mailer)
-    + [1.7 Image upload (Active Storage & Cloudinary)](#17-image-upload-active-storang-and-cloudinary)
+    + [1.7 Image upload (Active Storage & Cloudinary)](#17-image-upload-active-storage-and-cloudinary)
   * [2. Frontend](#2-frontend)
   * [3. Dependencies](#3-dependencies)
 - [II - Installation](#ii---installation)
