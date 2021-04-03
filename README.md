@@ -21,6 +21,7 @@ Login as a user or admin (admin has access to admin dashboard from profile dropd
     + [1.6 Mailer (Action Mailer)](#16-mailer-action-mailer)
     + [1.7 Image upload (Active Storage & Cloudinary)](#17-image-upload-active-storage-and-cloudinary)
   * [2. Frontend](#2-frontend)
+      + [2.1 About the Frontend](#21-about-the-frontend)
   * [3. Dependencies](#3-dependencies)
 - [II - Installation](#ii---installation)
 
@@ -178,6 +179,19 @@ event.images.attach(image_blobs[9..11].sample)
 event.images.attach(image_blobs[12..14].sample)
 ```
 Now I make sure each `event` doesn't get the same image twice, and this also have the advantage of forcing more diversity regarding the images displayed.
+
+###  2. Frontend
+#### 2.1 About the frontend
+
+- The frontend is an overall mix between Bootstrap and personal customizations. 
+
+- I've applied atomic design principles cutting the components in partials. 
+
+- I've used the 7-1 pattern to structure stylesheets folders.
+ 
+- The components are generally Bootstrap based and customized using my own classes, especially for the cards and the main listing on the event show page. I wanted to replicate them from the [EventBrite](https://www.eventbrite.fr/) official website.
+
+- I've used the Bootstrap grid system for layout, but I customized the `.container` class and added my personal mixin breakpoints for responsivness.
 
 ## II - Installation
 
