@@ -18,8 +18,8 @@ Login as a user or admin (admin has access to admin dashboard from profile dropd
     + [1.3 Authorization (CanCanCan)](#13-authorization-cancancan)
     + [1.4 Admin dashboard (Administrate)](#14-admin-dashboard-administrate)
     + [1.5 Payment system (Stripe)](#15-payment-system)
-    + [1.5 Mailer (Action Mailer)](#16-mailer-action-mailer)
-    + [1.6 Image upload (Active Storage & Cloudinary)](#16-active-storang-and-cloudinary)
+    + [1.6 Mailer (Action Mailer)](#16-mailer-action-mailer)
+    + [1.7 Image upload (Active Storage & Cloudinary)](#16-active-storang-and-cloudinary)
   * [2. Frontend](#2-frontend)
   * [3. Dependencies](#3-dependencies)
 - [II - Installation](#ii---installation)
@@ -103,7 +103,7 @@ The admin dashboard is accessible under the "/admin" namespace. You can login as
 
 When an event is newly created, it has its `validated` attribute set to `false`. It's not displayed on the index pages, and only its creator has permission to access the event `show` page in order to update or delete it. To be validated, an admin has to do it manually through the admin dashboard.
 
-#### 1.4 Payment system ([Stripe](https://stripe.com/docs/development))
+#### 1.5 Payment system ([Stripe](https://stripe.com/docs/development))
 
 Event can either be free or paying. To checkout for paying events, enter testing card infos in the checkout form: 
 
@@ -111,7 +111,7 @@ Event can either be free or paying. To checkout for paying events, enter testing
 - Expiry date: any date in the future e.g. `12/25`
 - CVV: any 3 digits e.g. `123`
 
-#### 1.4 Mailer (Action Mailer)
+#### 1.6 Mailer (Action Mailer)
 
 Emails are sent after specific actions: 
 - welcome email: when a user create an account
@@ -119,7 +119,7 @@ Emails are sent after specific actions:
 
 There are both text and html templates.
 
-#### 1.5 Image upload (Active Storage & Cloudinary)
+#### 1.7 Image upload (Active Storage & Cloudinary)
 
 Cloudinary is used for hosting images and storing uploaded images. 
 I use Active Storage for uploading images directly from the client to the cloud service. 
