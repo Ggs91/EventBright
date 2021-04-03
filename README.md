@@ -95,8 +95,8 @@ Here's some examples of permissions implemented:
 
 - Unauthenticated users can only access `event`'s `index` & `show` pages, but can't join it.
 - Only `event`'s administrator can access the `event`'s profile (`show`) page if it's not validated by the (app) administrator yet. This is so an event's owner has still permission to updated or delete his event before it's published.
--Only validated `event`'s are displayed on the `index` page.
--Only `event`'s administrator can access `participant`s list.
+- Only validated `event`'s are displayed on the `index` page.
+- Only `event`'s administrator can access `participant`s list.
 
 #### 1.4 Admin dashboard ([Administrate](https://github.com/thoughtbot/administrate))
 The admin dashboard is accessible under the "/admin" namespace. You can login as an admin with these credentials: `username: admin, password: password`.
