@@ -124,7 +124,7 @@ There are both text and html templates.
 Cloudinary is used for hosting images and storing uploaded images. 
 I use Active Storage for uploading images directly from the client to the cloud service. 
 
-An interesting part was the work on the seed with this configuration. I had to find a way to minimize API calls to the server and make sure each `event` doesn't get the same image twice for both a better seed and because there is a uniqueness constraint on the `active_storage_attachments` table, so it is not possible to attach the same blob twice to an `event`.
+An interesting part was the work on the seed with this configuration.
 
 I had 15 images stored on Cloudinary that I wanted to use for seeding the `event` images (each `event` has 3 attached images). First I attached an image individually to each event like this:
 ```ruby
