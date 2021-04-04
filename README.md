@@ -1,4 +1,5 @@
 ![](/app/assets/images/EventBright.png)
+![](/app/assets/images/EventBright.png)
 
 An EventBrite clone application built from scratch with Ruby on Rails!
 
@@ -11,7 +12,7 @@ Login as a user or admin (admin has access to admin dashboard from profile dropd
 + password: password 
 
 ## Table of Contents  
-- [I - Informations](#i---informations)
+- [I - Informations & study cases](#i---informations-and-study-cases)
   * [1. Backend](#1-backend)
     + [1.1 Models & database structure](#11-models-and-database-structure)
     + [1.2 Authentication (Devise)](#12-authentication-devise)
@@ -22,10 +23,11 @@ Login as a user or admin (admin has access to admin dashboard from profile dropd
     + [1.7 Image upload (Active Storage & Cloudinary)](#17-image-upload-active-storage-and-cloudinary)
   * [2. Frontend](#2-frontend)
       + [2.1 About the Frontend](#21-about-the-frontend)
+      + [2.1 EventBrite inspiration](#22-eventbrite-inspiration)
   * [3. Dependencies](#3-dependencies)
 - [II - Installation](#ii---installation)
 
-## I - Informations
+## I - Informations and study cases
 
 ###  1. Backend
 #### 1.1 Models and database structure
@@ -192,6 +194,71 @@ Now I make sure each `event` doesn't get the same image twice, and this also hav
 - The components are generally Bootstrap based and customized using my own classes, especially for the cards and the main listing on the event show page. I wanted to replicate them from the [EventBrite](https://www.eventbrite.fr/) official website.
 
 - I've used the Bootstrap grid system for layout, but I customized the `.container` class and added my personal mixin breakpoints for responsivness.
+
+- Assets are compiled through the Asset Pipeline, Bootstrap is loaded through a Bootswatch theme under the `vendor/assets` folder 
+
+#### 2.2 EventBrite inspiration
+I replicated 2 organisms from the official EventBrite website: cards and the event listing on the event show page.
+
+##### 2.2.1 Cards
+Cards are composed of an image section and a body section with informations about the event. They have 2 main shapes, a "regular" and a "horizontal" one when under a certain breakpoint. To make the transition, I've used 2 main classes that are applied dynamically depending on the breakpoint.
+
+In the card partial `app/views/events/_event_card.html.erb` there is only 2 classes applied by default 
+
+- Bootstrap `.card` class: Used mainly to apply flexbox properties.
+
+- Common styles `.card-presentation`: This applies styles that are common to both shapes, like `box-shadow`, `border-radius`, `object-fit` to the image... and to the subsections of the card as well.  
+
+There are 2 other classes applied dynamically using javascript
+
+```javascript
+/// app/assets/javascripts/card.js
+
+  var cards = Array.from(document.getElementsByClassName("card"));
+
+  function switchCardsLayout(x) {
+    if (x.matches) {
+      cards.forEach((card) => {
+        card.classList.remove("card-regular");
+        card.classList.add("card-horizontal");
+      });
+    } else {
+      cards.forEach((card) => {
+        if (card.classList.contains("card-horizontal")) {
+          card.classList.remove("card-horizontal");
+        }
+        card.classList.add("card-regular");
+      });
+    }
+  }
+
+  var x = window.matchMedia("(max-width: 575px)");
+  switchCardsLayout(x);
+  x.addListener(switchCardsLayout);
+```
+Here I use javascript media queries to apply either `.card-regular` above 575px, or `.card-horizontal` below.
+
+Now it is easier to apply the styles specifically to one or the other shape, as the classes `.regular` & `.horizontal` target one specific shape, instead of fumbling around with media queries.
+
+For example, defining styles for the `card_event_link` subsection is done by "namespacing" the shape we are talking about first: 
+
+```css
+/// app/assets/stylesheets/components/_card.scss
+
+/// card-im-link styles when card in "regular" shape
+.card-regular .card-img-link {
+  width: 100%;
+  height: 160px;
+  min-height: 160px;
+}
+
+/// card-im-link styles when card in "horizontal" shape
+.card-horizontal .card-img-link {
+  height: 100%;
+  width: 160px;
+  min-width: 160px;
+}
+```
 
 ## II - Installation
 
