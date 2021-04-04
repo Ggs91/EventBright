@@ -242,7 +242,7 @@ Now it is easier to apply the styles specifically to one or the other shape, as 
 
 For example, defining styles for the `card_event_link` subsection is done by "namespacing" the shape we are talking about: 
 
-```css
+```scss
 // app/assets/stylesheets/components/_card.scss
 
 // card-img-link styles when card in "regular" shape
@@ -324,7 +324,7 @@ I wanted a showcase section with a carousel and sliding images to give a little 
 
 So I've used the basic Bootsrap carousel, and made it span the enitre page width. I applied an overlay to make the text stand out. I gave it a `height: 100%`, for it to take up the height of its parent height (the showcase section) `height: 70vh`
 
-```css
+```scss
 // app/assets/stylesheets/pages/_home.scss
 
 #showcase {
