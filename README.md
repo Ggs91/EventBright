@@ -1,6 +1,4 @@
 ![](/app/assets/images/EventBright.png)
-![](/app/assets/images/EventBright.png)
-
 An EventBrite clone application built from scratch with Ruby on Rails!
 
 Visit the app here [eventbright-prod-app.herokuapp.com](https://eventbright-prod-app.herokuapp.com/)
@@ -12,7 +10,7 @@ Login as a user or admin (admin has access to admin dashboard from profile dropd
 + password: password 
 
 ## Table of Contents  
-- [I - Informations & study cases](#i---informations-and-study-cases)
+- [I - Informations & case studies](#i---informations-and-case-studies)
   * [1. Backend](#1-backend)
     + [1.1 Models & database structure](#11-models-and-database-structure)
     + [1.2 Authentication (Devise)](#12-authentication-devise)
@@ -23,7 +21,8 @@ Login as a user or admin (admin has access to admin dashboard from profile dropd
     + [1.7 Image upload (Active Storage & Cloudinary)](#17-image-upload-active-storage-and-cloudinary)
   * [2. Frontend](#2-frontend)
       + [2.1 About the Frontend](#21-about-the-frontend)
-      + [2.1 EventBrite inspiration](#22-eventbrite-inspiration)
+      + [2.2 EventBrite inspiration](#22-eventbrite-inspiration)
+      + [2.3 Bootstrap customization](#23-bootstrap-customization)
   * [3. Dependencies](#3-dependencies)
 - [II - Installation](#ii---installation)
 
@@ -193,7 +192,7 @@ Now I make sure each `event` doesn't get the same image twice, and this also hav
  
 - The components are generally Bootstrap based and customized using my own classes, especially for the cards and the main listing on the event show page. I wanted to replicate them from the [EventBrite](https://www.eventbrite.fr/) official website.
 
-- I've used the Bootstrap grid system for layout, but I customized the `.container` class and added my personal mixin breakpoints for responsivness.
+- I've used the Bootstrap grid system for layout, but I customized the `.container` class and added my personal mixin breakpoints for responsivness (in `assets/stylesheets/utilities/mixins/_breakpoints.scss`).
 
 - Assets are compiled through the Asset Pipeline, Bootstrap is loaded through a Bootswatch theme under the `vendor/assets` folder 
 
@@ -201,7 +200,7 @@ Now I make sure each `event` doesn't get the same image twice, and this also hav
 I replicated 2 organisms from the official EventBrite website: cards and the event listing on the event show page.
 
 ##### 2.2.1 Cards
-Cards are composed of an image section and a body section with informations about the event. They have 2 main shapes, a "regular" and a "horizontal" one when under a certain breakpoint. To make the transition, I've used 2 main classes that are applied dynamically depending on the breakpoint.
+Cards are composed of an image section and a body section with informations about the event. They have 2 main shapes, a "regular" and a "horizontal" one for mobile view. The switch happen under a certain breakpoint. To make the transition, I've used 2 main classes that are applied dynamically depending on the breakpoint.
 
 In the card partial `app/views/events/_event_card.html.erb` there is only 2 classes applied by default 
 
@@ -240,19 +239,19 @@ Here I use javascript media queries to apply either `.card-regular` above 575px,
 
 Now it is easier to apply the styles specifically to one or the other shape, as the classes `.regular` & `.horizontal` target one specific shape, instead of fumbling around with media queries.
 
-For example, defining styles for the `card_event_link` subsection is done by "namespacing" the shape we are talking about first: 
+For example, defining styles for the `card_event_link` subsection is done by "namespacing" the shape we are talking about: 
 
 ```css
-/// app/assets/stylesheets/components/_card.scss
+// app/assets/stylesheets/components/_card.scss
 
-/// card-im-link styles when card in "regular" shape
+// card-img-link styles when card in "regular" shape
 .card-regular .card-img-link {
   width: 100%;
   height: 160px;
   min-height: 160px;
 }
 
-/// card-im-link styles when card in "horizontal" shape
+// card-img-link styles when card in "horizontal" shape
 .card-horizontal .card-img-link {
   height: 100%;
   width: 160px;
@@ -260,6 +259,101 @@ For example, defining styles for the `card_event_link` subsection is done by "na
 }
 ```
 
+##### 2.2.2 Card Listing
+
+I was interested in replicating the card listing component of the events show page. 
+- I like the blur background that uses the event's image itself as a backgroung image. 
+- I also like how the CTA button is moving around at the different breakpoints. 
+- I chose to display a carousel of 3 images instead of just one. 
+- Finally I managed to get the behavior of having the blur background shrinking as the width of the page decrease and disapearing under phone viewport width.
+
+Looking at the event show page I figuered I could broke it down into few partials that could be by themselves re-usable components in other pages. 
+
+Here's the event listing partial: 
+
+```erb
+<!-- app/views/events/_event_listing.html.erb -->
+
+<div class="event-listing">
+  <%= render partial: "card_presentation_panel", locals: { event: event, amount: amount } %>
+  <%= render partial: "event_link_panel", locals: { event: event } %>
+
+  <div class="event-description">
+    <p class ="text-muted">Posted on <%= @event.creation_date_and_time %></p>
+    <h3>About this event</h3>
+    <p><%= event.description %></p>
+  </div>
+</div>
+```
+It is broken down into 3 sections, the first 2 are partials, the last one is not because it's proper to the event listing component.
+
+This allows me to use `card_presentation_panel` component in the participation `new` page as well to summarize the `event` details on the checkout page.
+
+This also allows me to clean up components that have a lot logic like the CTA button:
+```erb
+<!-- app/views/events/_event_link_panel.html.erb -->
+
+<% if current_user_is_administrator?(event) %>
+<div class="row">
+  <div class="col-12 d-flex event-link-panel">
+    <%= link_to "Event Dashboard", participations_path(event_id: event.id), class: 'btn btn-lg btn-success' %><br />
+  </div>
+</div>
+<% elsif current_user_already_participant?(event) %>
+<div class="row">
+  <div class="col-12 d-flex event-link-panel">
+    <%= link_to "Cancel participation", participation_path(current_user_participation(event).id), method: :delete, class:'btn btn-lg btn-danger' %><br />
+  </div>
+</div>
+<% else %>
+<div class="row">
+  <div class="col-12 d-flex event-link-panel">
+    <%= link_to "Join the event !", new_participation_path(event_id: event.id), class: 'btn btn-lg btn-primary' %><br />
+  </div>
+</div>
+<% end %>
+```
+
+Now the button is isolated with its logic in its own partial in the same way it's done in the Devise gem in `devise/shared/_links.html.erb` partial.
+
+#### 2.3 Bootstrap customization
+
+##### 2.3.1 Main carousel 
+I wanted a showcase section with a carousel and sliding images to give a little bit of animation to the home page.  
+
+So I've used the basic Bootsrap carousel, and made it span the enitre page width. I applied an overlay to make the text stand out. I gave it a `height: 100%`, for it to take up the height of its parent height (the showcase section) `height: 70vh`
+
+```css
+// app/assets/stylesheets/pages/_home.scss
+
+#showcase {
+  height: 70vh;
+  position: relative;
+}
+
+// app/assets/stylesheets/components/_showcase_carousel.scss
+
+#showcase-carousel {
+  height: 100%;
+  .carousel-inner,
+  .carousel-item {
+    width: 100%;
+    height: 100%;
+  }
+  .carousel-img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+  }
+}
+```
+##### 2.3.2 Error messages in form validation fields
+
+I wanted for each form field to have its error messages (if any) to be displayed under it.
+
+By default this doesn't happen 
+
+It might not be the better way to do it, I came accross the simple form gem that integrate error messages natively.
 ## II - Installation
 
 1. Clone the project: open a terminal and type in
