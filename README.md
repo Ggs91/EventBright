@@ -1,4 +1,5 @@
 ![](/app/assets/images/EventBright.png)
+
 An EventBrite clone application built from scratch with Ruby on Rails!
 
 Visit the app here [eventbright-prod-app.herokuapp.com](https://eventbright-prod-app.herokuapp.com/)
