@@ -1,21 +1,22 @@
 <header>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark-transparent" id="main-nav">
+  <nav class="navbar navbar-expand-lg navbar-dark" id="main-nav">
     <div class="container">
 
-      <%# Brand butoon %>
+      <!-- Brand button -->
+
       <a href="/" class="navbar-brand">
         Event<span class="highlight">Bright</span>
       </a>
 
-      <%# Navbar Toggler %>
+      <!-- Navbar toggler button-->
 
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#nav-content" aria-controls="nav-content" aria-expanded="false" aria-label="Toggle navigation" style="border:none">
         <span class="navbar-toggler-icon"></span>
       </button>
 
-      <%# Navbar  %>
+      <!-- Navbar -->
 
-      <div class="collapse navbar-collapse">
+      <div id="nav-content" class="collapse navbar-collapse">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item active">
             <%= link_to 'Home', root_path, class: 'nav-link' %>
@@ -56,7 +57,7 @@
         </ul>
       </div>
     </div>
-    <%# Container %>
+    <!-- Container -->
   </nav>
-  <%# navigation %>
+  <!-- Navigation -->
 </header>
