@@ -69,7 +69,7 @@ puts "#{User.all.count} users created (20 user + 1 demo user + 1 admin)"
     ActiveStorage::Blob.create_after_upload!(io: open("https://res.cloudinary.com/cloudfilestorage/image/upload/v1614549002/eventbrite/conference_y7qiyn.jpg"), filename: 'conference.jpg', content_type: 'image/jpg')
   ]
 
-  30.times do |i|
+30.times do |i|
   e = Event.create!(
     title: "Event #{i+1}",
     description: Faker::Lorem.paragraph(sentence_count: 120, supplemental: true),
