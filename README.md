@@ -24,7 +24,10 @@ Login as a user or admin (admin has access to admin dashboard from profile dropd
       + [2.1 About the Frontend](#21-about-the-frontend)
       + [2.2 EventBrite inspiration](#22-eventbrite-inspiration)
       + [2.3 Bootstrap customization](#23-bootstrap-customization)
-  * [3. Dependencies](#3-dependencies)
+  * [3. Workflow & deployment](#3-workflow-and-deployment) 
+      + [3.1 Workflow](#31-workflow)
+      + [3.2 Deployment](#32-deployment)
+  * [4. To be improved](#4-to-be-improved)
 - [II - Installation](#ii---installation)
 
 ## I - Informations and study cases
@@ -147,7 +150,7 @@ images = [
   end
 ``` 
 
-But I faced a 2 problems with the line `event.images.attach(images[rand[0..15].first])`:
+But I faced 2 problems with the line `event.images.attach(images[rand[0..15].first])`:
 
 - Each time the `#attach` method is used, it is actually re-uploading the image to Cloudinary before creating a blob for this image and attaching it to the event. This means if I wanted to seed 30 `event`s I would have 90 (30 * 3) uploads happening & unnecessary duplicated images stored on the cloud. 
 - This is too much API calls to the server and Cloudinary was blocking my requests
@@ -350,11 +353,77 @@ So I've used the basic Bootsrap carousel, and made it span the enitre page width
 ```
 ##### 2.3.2 Error messages in form validation fields
 
-I wanted for each form field to have its error messages (if any) to be displayed under it.
+I used Bootstrap for the forms, and I wanted for each form field to have its error messages (if any) to be displayed under it. This is possible by default for client side validations, but I wanted to use [the serve side](https://getbootstrap.com/docs/4.0/components/forms/#server-side) and display the error messages from the app validations. 
 
-By default this doesn't happen 
+I found out about the [ActionView::Base.field_error_proc](https://github.com/rails/rails/blob/v5.2.5/actionview/lib/action_view/base.rb#L145-L145) accessor that gives access to the html tags of a model's field attribute that gets errors on validations.
 
-It might not be the better way to do it, I came accross the simple form gem that integrate error messages natively.
+I overwrote it in an initializer file to use the Bootstrap `is-invalid` and `invalid-feedback` classes. See my answer in [this gist](https://gist.github.com/telwell/db42a4dafbe9cc3b7988debe358c88ad#gistcomment-3559468)
+
+```ruby
+# app/config/initializers/bootstrap_form_errors_customizer.rb
+
+ActionView::Base.field_error_proc = proc do |html_tag, instance|
+  is_label_tag = html_tag =~ /^<label/
+  class_attr_index = html_tag.index 'class="' 
+
+  def format_error_message_to_html_list(error_msg)
+    html_list_errors = "<ul></ul>"
+    if error_msg.is_a?(Array)
+      error_msg.each do |msg|
+        html_list_errors.insert(-6, "<li>#{msg}</li>")
+      end
+    else 
+      html_list_errors.insert(-6, "<li>#{msg}</li>")
+    end
+    html_list_errors
+  end
+
+  invalid_div =
+    "<div class='invalid-feedback'>#{format_error_message_to_html_list(instance.error_message)}</div>"
+
+  
+  if class_attr_index && !is_label_tag
+    html_tag.insert(class_attr_index + 7, 'is-invalid ')
+    html_tag + invalid_div.html_safe
+  elsif !class_attr_index && !is_label_tag
+    html_tag.insert(html_tag.index('>'), ' class="is-invalid"')
+    html_tag + invalid_div.html_safe
+  else
+    html_tag.html_safe
+  end
+end
+```
+Basically, I create a `div` with the `invalid-feedback` class. It contains a list of the error(s) that an attribute gets if it's invalid. I then target the `input` or `textarea` tags and add the `is-invalid` class (so they get the Bootstrap red border decoration around), and insert the invalid-feedback `div` bellow it to list the errors.  
+
+It might not be the better way to do it, I came accross the simple form gem that integrate error messages natively, nonetheless, it was a fun learning experience to do it this way.
+
+###  3. Workflow and deployment
+#### 3.1 Workflow
+The workflow hasn't been perfect from the start. Overtime I would lookup better ways to implement a cleaner workflow and changed it along the way .Besides that, I've never pushed directy to the `main` branch (except for readme updates).
+
+Here I describe the workflow I had at the end of the project:
+
+I used 2 permanent branches for the main worflow (`main` & `dev`) and small temporary branches for features development.
+
+For implementing a new feature I pull `main` locally and create a feature branch out of it. 
+Once it's finished I push the feature branch to the Github repository. I create a pull request to merge into the `dev` branch, and then a pull request to merge `dev` into `main`.
+
+To update a feature branch with the latest update, I pull `main` locally, merge it into `dev` locally to update it, and merge it to the feature branch. This way any conflict that may happen would be resolved on the local feature branch and would not affect `main`. 
+  
+#### 3.2 Deployment
+
+I use Heroku pipeline for continus delivery with 2 apps: staging and production.
+
+The Github `main` branch serves the staging remote, and I use the "promote to production" button in the Heroku dashboard to push the code to the production's app remote. 
+
+The same APIs credentials are used for both apps. 
+###  4. To be improved
+
+Looking back in the code few months afterwards, and especially after working in a professional environment, I realized few mistakes and improvements that can better the code quality:
+
+- Formatting: I left few blank lines and forgot spaces around quotes or operators. I was sometimes inconsistent with the use of simple quotes / double quotes. I didn't left a blank line at the end of each file. Now I like to refer to the [Ruby style guide](https://github.com/rubocop/ruby-style-guide) and I use VScode extensions to help imporve the formatting.  
+
+- The history of my commits and workflow isn't perfect: I badly used `git add .`  and  commited many files with the same message. I pushed on the master branch the readme updates.
 ## II - Installation
 
 1. Clone the project: open a terminal and type in
