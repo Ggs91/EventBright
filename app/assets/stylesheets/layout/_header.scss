@@ -1,22 +1,28 @@
 #main-nav {
   position: absolute;
   top: 0;
-  width: 100%; 
-  z-index: 100;
+  width: 100%;
+  min-width: 250px;
   height: 55px;
+  z-index: 100;
   padding: 0;
+  @include dark-transparent-bg;
   @include breakpoint(phone-landscape) {
     padding: 0 2em;
   }
 }
 
-.bg-dark-transparent {
-  background: rgba(23, 20, 31, 0.7) !important;
+#nav-content {
+  padding: 0 10px 10px 10px;
+  @media (max-width: 991.98px) {
+    @include dark-transparent-bg;
+  }
 }
 
 .navbar-brand {
   font-size: 1.3rem;
   font-weight: 700;
+  padding: 12px 0;
 }
 
 #main-nav .nav-item .nav-link {
@@ -37,7 +43,7 @@
 }
 
 #main-nav .dropdown-menu.show{
-  background: rgba(23, 20, 31, 0.7) !important;
+  @include dark-transparent-bg;
   padding: 0;
 }
 
