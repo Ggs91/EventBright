@@ -13,9 +13,9 @@
 }
 
 #nav-content {
-  padding: 0 10px 10px 10px;
   @media (max-width: 991.98px) {
     @include dark-transparent-bg;
+    padding: 0 10px 10px 10px;
   }
 }
 
