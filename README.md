@@ -8,9 +8,9 @@ Login as a user or admin (admin has access to admin dashboard from profile dropd
 
 + username: user or admin
 
-+ password: password 
++ password: password
 
-## Table of Contents  
+## Table of Contents
 - [I - Informations & case studies](#i---informations-and-case-studies)
   * [1. Backend](#1-backend)
     + [1.1 Models & database structure](#11-models-and-database-structure)
@@ -24,7 +24,7 @@ Login as a user or admin (admin has access to admin dashboard from profile dropd
       + [2.1 About the Frontend](#21-about-the-frontend)
       + [2.2 EventBrite inspiration](#22-eventbrite-inspiration)
       + [2.3 Bootstrap customization](#23-bootstrap-customization)
-  * [3. Workflow & deployment](#3-workflow-and-deployment) 
+  * [3. Workflow & deployment](#3-workflow-and-deployment)
       + [3.1 Workflow](#31-workflow)
       + [3.2 Deployment](#32-deployment)
   * [4. To be improved](#4-to-be-improved)
@@ -34,7 +34,7 @@ Login as a user or admin (admin has access to admin dashboard from profile dropd
 
 ###  1. Backend
 #### 1.1 Models and database structure
-Currently there's 4 models: 
+Currently there's 4 models:
  - `User`: set for both regluar users of the app and administrators (with an `:admin` attribute set to `true`)
     - has one attached `avatar`
     - has many `administrated_events` (`Event` type)
@@ -42,11 +42,11 @@ Currently there's 4 models:
     - has many `attended_events` (`Event` type) through `participation`
  - `Event`: main subject resource
     - has many attached `images`
-    - belongs to `administrator` (`User` type) 
-    - has many `participations` 
+    - belongs to `administrator` (`User` type)
+    - has many `participations`
     - has many `participants` (`User` type) through `participations`
     - has many `comments` as `commentable`
- - `Participation`: a user's participation to an event 
+ - `Participation`: a user's participation to an event
     - belongs to `user`
     - belongs to `event`
  - `Comment`: on events or other users comments
@@ -56,20 +56,20 @@ Currently there's 4 models:
 
 
 #### 1.2 Authentication (Devise)
-I twisted the Devise configuration a little bit to allow users to use either email or username to sign in. Following the [Devise wiki](https://github.com/heartcombo/devise/wiki/How-To:-Allow-users-to-sign-in-using-their-username-or-email-address) here's the few steps I've done: 
+I twisted the Devise configuration a little bit to allow users to use either email or username to sign in. Following the [Devise wiki](https://github.com/heartcombo/devise/wiki/How-To:-Allow-users-to-sign-in-using-their-username-or-email-address) here's the few steps I've done:
 - Change the default authentication key to use `:login` instead of `:email`:
 ```ruby
 # config/initializers/devise.rb
 
   config.authentication_keys = [:login]
 ```
-- I made it mandatory to choose a username along with email & password during registration. So I had to permit it in strong parameters. Note: email also need to be explicitly permitted as well, it's no longer automatically permitted as it's not the default authentication key anymore.  
+- I made it mandatory to choose a username along with email & password during registration. So I had to permit it in strong parameters. Note: email also need to be explicitly permitted as well, it's no longer automatically permitted as it's not the default authentication key anymore.
 ```ruby
 # app/controllers/application_controller.rb
 
   def configure_permitted_parameters
     devise_parameter_sanitizer.permit(:sign_up,
-      keys: [:email, :username]) 
+      keys: [:email, :username])
     devise_parameter_sanitizer.permit(:account_update,
       keys: [:first_name, :last_name, :description, :email])
   end
@@ -92,12 +92,12 @@ I twisted the Devise configuration a little bit to allow users to use either ema
        { value: login.strip.downcase }]).first
    end
  end
-``` 
+```
 
 #### 1.3 Authorization ([CanCanCan](https://github.com/CanCanCommunity/cancancan))
 Permissions are centralized in `app/models/ability.rb`. It enabled me to drastically DRY up the controllers by getting ride of many `before_action`s, and conveniently load a resource with the right permissions.
 
-Here's some examples of permissions implemented: 
+Here's some examples of permissions implemented:
 
 - Unauthenticated users can only access `event`'s `index` & `show` pages, but can't join it.
 - Only `event`'s administrator can access the `event`'s profile (`show`) page if it's not validated by the (app) administrator yet. This is so an event's owner has still permission to updated or delete his event before it's published.
@@ -111,7 +111,7 @@ When an event is newly created, it has its `validated` attribute set to `false`.
 
 #### 1.5 Payment system ([Stripe](https://stripe.com/docs/development))
 
-Event can either be free or paying. To checkout for paying events, enter testing card infos in the checkout form: 
+Event can either be free or paying. To checkout for paying events, enter testing card infos in the checkout form:
 
 - Card n° `4242 4242 4242 4242`
 - Expiry date: any date in the future e.g. `12/25`
@@ -119,16 +119,16 @@ Event can either be free or paying. To checkout for paying events, enter testing
 
 #### 1.6 Mailer (Action Mailer)
 
-Emails are sent after specific actions: 
+Emails are sent after specific actions:
 - welcome email: when a user create an account
-- summarizing email: when a participation is created to summarize the event infos, `star_date`, `administrator` and number of `participants`. 
+- summarizing email: when a participation is created to summarize the event infos, `star_date`, `administrator` and number of `participants`.
 
 There are both text and html templates.
 
 #### 1.7 Image upload (Active Storage and Cloudinary)
 
-Cloudinary is used for hosting images and storing uploaded images. 
-I use Active Storage for uploading images directly from the client to the cloud service. 
+Cloudinary is used for hosting images and storing uploaded images.
+I use Active Storage for uploading images directly from the client to the cloud service.
 
 An interesting part was the work on the seed with this configuration.
 
@@ -144,20 +144,20 @@ images = [
   ... # 15 images paths on the cloud
 ]
 
- # Attaching 3 images per event: 
-  3.times do 
+ # Attaching 3 images per event:
+  3.times do
     event.images.attach(images[rand[0..15].first])
   end
-``` 
+```
 
 But I faced 2 problems with the line `event.images.attach(images[rand[0..15].first])`:
 
-- Each time the `#attach` method is used, it is actually re-uploading the image to Cloudinary before creating a blob for this image and attaching it to the event. This means if I wanted to seed 30 `event`s I would have 90 (30 * 3) uploads happening & unnecessary duplicated images stored on the cloud. 
+- Each time the `#attach` method is used, it is actually re-uploading the image to Cloudinary before creating a blob for this image and attaching it to the event. This means if I wanted to seed 30 `event`s I would have 90 (30 * 3) uploads happening & unnecessary duplicated images stored on the cloud.
 - This is too much API calls to the server and Cloudinary was blocking my requests
 
 After some research I found a way to separate the processes (blob creation & blob attachement) that are automatically done by the `#attach` method:
 
-```ruby 
+```ruby
 # seed.rb
 
 image_blobs = [
@@ -167,12 +167,12 @@ image_blobs = [
 ... # 15 times
 ]
 ```
-The `ActiveStorage::Blob.create_after_upload!` uploads the images to the cloud and create a blob referencing this image. Now I have an array that contain 15 blobs referencing 15 images, that are uploaded once and for all to the cloud. I can now have more control over the attachement process. 
+The `ActiveStorage::Blob.create_after_upload!` uploads the images to the cloud and create a blob referencing this image. Now I have an array that contain 15 blobs referencing 15 images, that are uploaded once and for all to the cloud. I can now have more control over the attachement process.
 
-But I faced another problem with the file attachment: 
+But I faced another problem with the file attachment:
 
 ```ruby
-3.times do 
+3.times do
   event.images.attach(image_blobs[rand[0..15]])
 end
 ```
@@ -188,17 +188,17 @@ Now I make sure each `event` doesn't get the same image twice, and this also hav
 ###  2. Frontend
 #### 2.1 About the frontend
 
-- The frontend is an overall mix between Bootstrap and personal customizations. 
+- The frontend is an overall mix between Bootstrap and personal customizations.
 
-- I've applied atomic design principles cutting the components in partials. 
+- I've applied atomic design principles cutting the components in partials.
 
 - I've used the 7-1 pattern to structure stylesheets folders.
- 
+
 - The components are generally Bootstrap based and customized using my own classes, especially for the cards and the main listing on the event show page. I wanted to replicate them from the [EventBrite](https://www.eventbrite.fr/) official website.
 
 - I've used the Bootstrap grid system for layout, but I customized the `.container` class and added my personal mixin breakpoints for responsivness (in `assets/stylesheets/utilities/mixins/_breakpoints.scss`).
 
-- Assets are compiled through the Asset Pipeline, Bootstrap is loaded through a Bootswatch theme under the `vendor/assets` folder 
+- Assets are compiled through the Asset Pipeline, Bootstrap is loaded through a Bootswatch theme under the `vendor/assets` folder
 
 #### 2.2 EventBrite inspiration
 I replicated 2 organisms from the official EventBrite website: cards and the event listing on the event show page.
@@ -206,18 +206,18 @@ I replicated 2 organisms from the official EventBrite website: cards and the eve
 ##### 2.2.1 Cards
 Cards are composed of an image section and a body section with informations about the event. They have 2 main shapes, a "regular" and a "horizontal" one for mobile view. The switch happen under a certain breakpoint. To make the transition, I've used 2 main classes that are applied dynamically depending on the breakpoint.
 
-In the card partial `app/views/events/_event_card.html.erb` there is only 2 classes applied by default 
+In the card partial `app/views/events/_event_card.html.erb` there is only 2 classes applied by default
 
 - Bootstrap `.card` class: Used mainly to apply flexbox properties.
 
-- Common styles `.card-presentation`: This applies styles that are common to both shapes, like `box-shadow`, `border-radius`, `object-fit` to the image... and to the subsections of the card as well.  
+- Common styles `.card-presentation`: This applies styles that are common to both shapes, like `box-shadow`, `border-radius`, `object-fit` to the image... and to the subsections of the card as well.
 
 There are 2 other classes applied dynamically using javascript
 
 ```javascript
 /// app/assets/javascripts/card.js
 
-  var cards = Array.from(document.getElementsByClassName("card"));
+  const cards = Array.from(document.getElementsByClassName("card"));
 
   function switchCardsLayout(x) {
     if (x.matches) {
@@ -235,7 +235,7 @@ There are 2 other classes applied dynamically using javascript
     }
   }
 
-  var x = window.matchMedia("(max-width: 575px)");
+  const x = window.matchMedia("(max-width: 575px)");
   switchCardsLayout(x);
   x.addListener(switchCardsLayout);
 ```
@@ -243,7 +243,7 @@ Here I use javascript media queries to apply either `.card-regular` above 575px,
 
 Now it is easier to apply the styles specifically to one or the other shape, as the classes `.regular` & `.horizontal` target one specific shape, instead of fumbling around with media queries.
 
-For example, defining styles for the `card_event_link` subsection is done by "namespacing" the shape we are talking about: 
+For example, defining styles for the `card_event_link` subsection is done by "namespacing" the shape we are talking about:
 
 ```scss
 // app/assets/stylesheets/components/_card.scss
@@ -265,15 +265,15 @@ For example, defining styles for the `card_event_link` subsection is done by "na
 
 ##### 2.2.2 Card Listing
 
-I was interested in replicating the card listing component of the events show page. 
-- I like the blur background that uses the event's image itself as a backgroung image. 
-- I also like how the CTA button is moving around at the different breakpoints. 
-- I chose to display a carousel of 3 images instead of just one. 
+I was interested in replicating the card listing component of the events show page.
+- I like the blur background that uses the event's image itself as a backgroung image.
+- I also like how the CTA button is moving around at the different breakpoints.
+- I chose to display a carousel of 3 images instead of just one.
 - Finally I managed to get the behavior of having the blur background shrinking as the width of the page decrease and disapearing under phone viewport width.
 
-Looking at the event show page I figuered I could broke it down into few partials that could be by themselves re-usable components in other pages. 
+Looking at the event show page I figuered I could broke it down into few partials that could be by themselves re-usable components in other pages.
 
-Here's the event listing partial: 
+Here's the event listing partial:
 
 ```erb
 <!-- app/views/events/_event_listing.html.erb -->
@@ -322,8 +322,8 @@ Now the button is isolated with its logic in its own partial in the same way it'
 
 #### 2.3 Bootstrap customization
 
-##### 2.3.1 Main carousel 
-I wanted a showcase section with a carousel and sliding images to give a little bit of animation to the home page.  
+##### 2.3.1 Main carousel
+I wanted a showcase section with a carousel and sliding images to give a little bit of animation to the home page.
 
 So I've used the basic Bootsrap carousel, and made it span the enitre page width. I applied an overlay to make the text stand out. I gave it a `height: 100%`, for it to take up the height of its parent height (the showcase section) `height: 70vh`
 
@@ -353,7 +353,7 @@ So I've used the basic Bootsrap carousel, and made it span the enitre page width
 ```
 ##### 2.3.2 Error messages in form validation fields
 
-I used Bootstrap for the forms, and I wanted for each form field to have its error messages (if any) to be displayed under it. This is possible by default for client side validations, but I wanted to use [the serve side](https://getbootstrap.com/docs/4.0/components/forms/#server-side) and display the error messages from the app validations. 
+I used Bootstrap for the forms, and I wanted for each form field to have its error messages (if any) to be displayed under it. This is possible by default for client side validations, but I wanted to use [the serve side](https://getbootstrap.com/docs/4.0/components/forms/#server-side) and display the error messages from the app validations.
 
 I found out about the [ActionView::Base.field_error_proc](https://github.com/rails/rails/blob/v5.2.5/actionview/lib/action_view/base.rb#L145-L145) accessor that gives access to the html tags of a model's field attribute that gets errors on validations.
 
@@ -364,7 +364,7 @@ I overwrote it in an initializer file to use the Bootstrap `is-invalid` and `inv
 
 ActionView::Base.field_error_proc = proc do |html_tag, instance|
   is_label_tag = html_tag =~ /^<label/
-  class_attr_index = html_tag.index 'class="' 
+  class_attr_index = html_tag.index 'class="'
 
   def format_error_message_to_html_list(error_msg)
     html_list_errors = "<ul></ul>"
@@ -372,7 +372,7 @@ ActionView::Base.field_error_proc = proc do |html_tag, instance|
       error_msg.each do |msg|
         html_list_errors.insert(-6, "<li>#{msg}</li>")
       end
-    else 
+    else
       html_list_errors.insert(-6, "<li>#{msg}</li>")
     end
     html_list_errors
@@ -381,7 +381,7 @@ ActionView::Base.field_error_proc = proc do |html_tag, instance|
   invalid_div =
     "<div class='invalid-feedback'>#{format_error_message_to_html_list(instance.error_message)}</div>"
 
-  
+
   if class_attr_index && !is_label_tag
     html_tag.insert(class_attr_index + 7, 'is-invalid ')
     html_tag + invalid_div.html_safe
@@ -393,7 +393,7 @@ ActionView::Base.field_error_proc = proc do |html_tag, instance|
   end
 end
 ```
-Basically, I create a `div` with the `invalid-feedback` class. It contains a list of the error(s) that an attribute gets if it's invalid. I then target the `input` or `textarea` tags and add the `is-invalid` class (so they get the Bootstrap red border decoration around), and insert the invalid-feedback `div` bellow it to list the errors.  
+Basically, I create a `div` with the `invalid-feedback` class. It contains a list of the error(s) that an attribute gets if it's invalid. I then target the `input` or `textarea` tags and add the `is-invalid` class (so they get the Bootstrap red border decoration around), and insert the invalid-feedback `div` bellow it to list the errors.
 
 It might not be the better way to do it, I came accross the simple form gem that integrate error messages natively, nonetheless, it was a fun learning experience to do it this way.
 
@@ -405,23 +405,23 @@ Here I describe the workflow I had at the end of the project:
 
 I used 2 permanent branches for the main worflow (`main` & `dev`) and small temporary branches for features development.
 
-For implementing a new feature I pull `main` locally and create a feature branch out of it. 
+For implementing a new feature I pull `main` locally and create a feature branch out of it.
 Once it's finished I push the feature branch to the Github repository. I create a pull request to merge into the `dev` branch, and then a pull request to merge `dev` into `main`.
 
-To update a feature branch with the latest update, I pull `main` locally, merge it into `dev` locally to update it, and merge it to the feature branch. This way any conflict that may happen would be resolved on the local feature branch and would not affect `main`. 
-  
+To update a feature branch with the latest update, I pull `main` locally, merge it into `dev` locally to update it, and merge it to the feature branch. This way any conflict that may happen would be resolved on the local feature branch and would not affect `main`.
+
 #### 3.2 Deployment
 
 I use Heroku pipeline for continus delivery with 2 apps: staging and production.
 
-The Github `main` branch serves the staging remote, and I use the "promote to production" button in the Heroku dashboard to push the code to the production's app remote. 
+The Github `main` branch serves the staging remote, and I use the "promote to production" button in the Heroku dashboard to push the code to the production's app remote.
 
-The same APIs credentials are used for both apps. 
+The same APIs credentials are used for both apps.
 ###  4. To be improved
 
 Looking back in the code few months afterwards, and especially after working in a professional environment, I realized few mistakes and improvements that can better the code quality:
 
-- Formatting: I left few blank lines and forgot spaces around quotes or operators. I was sometimes inconsistent with the use of simple quotes / double quotes. I didn't left a blank line at the end of each file. Now I like to refer to the [Ruby style guide](https://github.com/rubocop/ruby-style-guide) and I use VScode extensions to help imporve the formatting.  
+- Formatting: I left few blank lines and forgot spaces around quotes or operators. I was sometimes inconsistent with the use of simple quotes / double quotes. I didn't left a blank line at the end of each file. Now I like to refer to the [Ruby style guide](https://github.com/rubocop/ruby-style-guide) and I use VScode extensions to help imporve the formatting.
 
 - The history of my commits and workflow isn't perfect: I badly used `git add .`  and  commited many files with the same message. I pushed on the master branch the readme updates.
 ## II - Installation
@@ -449,7 +449,7 @@ $ rails db:seed
 
 5. Start the server:
 ```
-$ rails s 
+$ rails s
 ```
 
 6. Go to `http://localhost:3000`
