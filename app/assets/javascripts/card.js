@@ -1,5 +1,5 @@
 $(document).ready(function () {
-  var cards = Array.from(document.getElementsByClassName("card"));
+  const cards = Array.from(document.getElementsByClassName("card"));
 
   function switchCardsLayout(x) {
     if (x.matches) {
@@ -17,7 +17,7 @@ $(document).ready(function () {
     }
   }
 
-  var x = window.matchMedia("(max-width: 575px)");
+  const x = window.matchMedia("(max-width: 575px)");
   switchCardsLayout(x);
   x.addListener(switchCardsLayout);
 });
